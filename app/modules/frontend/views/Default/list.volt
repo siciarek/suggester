@@ -61,6 +61,10 @@
             {% endfor %}
             </tbody>
         </table>
+
+        {% if items.haveToPaginate() %}
+            {{ items.getLayout() }}
+        {% endif %}
     {% endif %}
 
 {% endblock %}

@@ -17,7 +17,6 @@
                         var self = $(this);
                         var form = self.parent();
                         form.find('*[name=page_url]').val(parent.location.href);
-
                         form.find('textarea').val(form.find('textarea').val().trim());
 
                         form.submit();

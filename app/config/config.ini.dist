@@ -29,5 +29,9 @@ dbname   = suggester
 name = SUGGESTER
 type = default
 
+[pager]
+limit = 10
+length = 5
+
 [security]
 rounds  = 32
