@@ -8,3 +8,4 @@ public/.DS_Store
 /vendor
 /temp
 /public/build
+/app/config/config.ini
