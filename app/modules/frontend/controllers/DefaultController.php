@@ -3,6 +3,7 @@ namespace Application\Frontend\Controller;
 
 use Application\Common\Controller\CommonController;
 use Application\Frontend\Entity\Suggestion;
+use Application\Frontend\Entity\SuggestionType;
 use Application\Frontend\Form\SuggestionForm;
 use Phalcon\Paginator\Pager;
 use Phalcon\Mvc\Controller;
@@ -22,9 +23,17 @@ class DefaultController extends CommonController {
         }
 
         $data = $this->modelsManager->createBuilder()
-            ->addFrom('\Application\Frontend\Entity\Suggestion', 's')
+            ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.created_at DESC')
         ;
+
+        $type = [];
+
+        foreach(SuggestionType::find()->toArray() as $t) {
+            $type[$t['id']] = $t['name'];
+        }
+
+        $this->view->type = $type;
 
         $this->view->items = new Pager(
             new Paginator(array(
@@ -33,21 +42,9 @@ class DefaultController extends CommonController {
                 'page' => $currentPage,
             )),
             array(
-                // We will use Bootstrap framework styles
                 'layoutClass' => 'Phalcon\Paginator\Pager\Layout\Bootstrap',
-                // Range window will be 5 pages
                 'rangeLength' => $this->getDI()->getConfig()->pager->length,
-                // Just a string with URL mask
                 'urlMask' => '?page={%page_number}',
-                // Or something like this
-                // 'urlMask'     => sprintf(
-                //     '%s?page={%%page_number}',
-                //     $this->url->get(array(
-                //         'for'        => 'index:posts',
-                //         'controller' => 'index',
-                //         'action'     => 'index'
-                //     ))
-                // ),
             )
         );
     }

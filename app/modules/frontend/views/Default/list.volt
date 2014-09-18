@@ -6,7 +6,6 @@
         $(document).ready(function () {
             $('table.suggestions-table').on('click', '.btn.delete', function (e) {
                 e.preventDefault();
-
                 alert('Not implemented yet.');
             });
         });
@@ -16,7 +15,7 @@
 {% block content %}
     <h1 class="page-header">
         <i class="fa fa-list-alt text-muted"></i>
-        {{ 'suggestion.list'|trans }} ({{ items|length }})
+        {{ 'suggestion.list'|trans }} ({{ items.count() }})
     </h1>
 
     {% if items|length == 0 %}
@@ -48,7 +47,7 @@
                     {% else %}
                         &#0151;
                     {% endif %}
-                    <td>{{ i.getTypeId() }}</td>
+                    <td>{{ ('suggestion.'~type[i.getTypeId()])|trans }}</td>
                     <td>{{ i.getContent() }}</td>
                     <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>
                     <td>{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
