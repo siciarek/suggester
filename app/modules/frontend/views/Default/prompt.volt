@@ -1,7 +1,10 @@
 {% extends 'templates/base.volt' %}
 
 {% block content %}
-    <div class="alert alert-success">{{ 'suggestion.confirmation'|trans }}</div>
+    <div class="alert alert-success">
+        <i class="fa fa-check-square-o fa-fw fa-lg"></i>
+        {{ 'suggestion.confirmation'|trans }}
+    </div>
     <div class="buttons">
             <a id="cancel-button" href="#"
                class="btn btn-default btn-lg">{{ 'common.no'|trans }}</a>
@@ -32,11 +35,12 @@
     {{ super() }}
     <style>
         .buttons {
-            text-align: center;
+            text-align: right;
         }
 
         body {
-            padding: 24px;
+            padding: 42px 24px;
+            background: #F8F8F8;
         }
 
         .btn {

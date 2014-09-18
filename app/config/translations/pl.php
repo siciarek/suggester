@@ -25,7 +25,7 @@ $messages = array(
     'suggestion.created_at' => 'Dodano',
 
     'suggestion.prompt' => 'Dodaj sugestię, propozycję zmiany lub opisz zauważoną usterkę.',
-    'suggestion.confirmation' => 'Twój wpis został zarejestrowany. Czy chciałbyś dodać kolejną pozycję?',
+    'suggestion.confirmation' => 'Wpis został zarejestrowany. Czy chciałbyś dodać kolejną pozycję?',
 
     'suggestion.comment' => 'Komentarz',
     'suggestion.error' => 'Usterka',
@@ -37,6 +37,7 @@ $messages = array(
     'form.select_from_list' => 'Wybierz z listy',
     'form.save' => 'Zapisz',
 
+    'common.close' => 'Zamknij',
     'common.anonymous' => 'Autor anonimowy',
     'common.priority' => 'Priorytet',
     'common.insert_description' => 'Dodaj opis…',
