@@ -1,2 +1,10 @@
-/cache/
-/config/development/
+.idea
+.DS_Store
+public/.DS_Store
+.phalcon
+/app/cache/*
+/composer.phar
+/composer.lock
+/vendor
+/temp
+/public/build

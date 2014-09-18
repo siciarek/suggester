@@ -1,0 +1,23 @@
+div.input-group {
+    margin-bottom: 8px;
+}
+
+label.input-group-addon {
+    min-width: 120px;
+    text-align: right;
+    vertical-align: top;
+    padding-top: 9px;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 120px;
+}
+
+.nav.nav-tabs li.active a {
+    font-weight: bold;
+}
+
+.tab-content .tab-pane {
+    padding: 15px;
+}

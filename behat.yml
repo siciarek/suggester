@@ -1,0 +1,19 @@
+imports:
+    resource: 'behat.default.yml'
+
+
+default:
+
+    exceptions:
+        verbosity: 2
+
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            base_url: http://suggester.dev
+            files_path: features/attachments
+            default_session: selenium2
+
+hl:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: goutte

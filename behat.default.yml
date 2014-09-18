@@ -1,0 +1,18 @@
+
+
+default:
+
+    formatters:
+        pretty: false
+        progress: true
+
+    translation:
+         locale: pl
+
+    exceptions:
+        verbosity: 1
+
+    extensions:
+       Behat\MinkExtension\ServiceContainer\MinkExtension:
+            goutte: ~
+            selenium2: ~
