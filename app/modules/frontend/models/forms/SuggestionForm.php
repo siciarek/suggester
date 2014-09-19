@@ -11,6 +11,7 @@ use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\InclusionIn;
 use Phalcon\Validation\Validator\PresenceOf;
+use Application\Common\Select  as XSelect;
 
 class SuggestionForm extends CommonForm {
     /**
@@ -29,7 +30,7 @@ class SuggestionForm extends CommonForm {
         $application = array_key_exists('application', $options) ? $options['application'] : null;
 
         $priorities = array();
-        foreach(['C', 'M', 'S', 'W'] as $p) {
+        foreach (['C', 'M', 'S', 'W'] as $p) {
             $priorities[$p] = mb_convert_case($trans->query('priority.' . $p), MB_CASE_LOWER, 'UTF-8');
         }
         $controls = array();
@@ -45,12 +46,20 @@ class SuggestionForm extends CommonForm {
                 )
             );
 
-        $controls[] = (new Select('type_id', SuggestionType::find(), array(
-            'using' => array('id', 'name')
-        )))
+        $type_ids = (new XSelect('type_id',
+            SuggestionType::find(),
+            array(
+                'using' => array('id', 'name'),
+                'required' => true,
+                'useEmpty' => true,
+                'emptyText' => $trans->query('form.select_from_list'),
+                'emptyValue' => ''
+            ), 'suggestion.'))
             ->setLabel($trans->query('suggestion.type'))
             ->addFilter('trim')
             ->addFilter('int');
+
+        $controls[] = $type_ids;
 
         $controls[] = (new TextArea('content', [
             'required' => true,
@@ -59,7 +68,7 @@ class SuggestionForm extends CommonForm {
             'placeholder' => $trans->query('common.insert_description'),
         ]))
             ->setLabel($trans->query('suggestion.content'))
-               ->addFilter('trim')
+            ->addFilter('trim')
             ->addFilter('null')
             ->addValidators(array(
                 new PresenceOf(array(

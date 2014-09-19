@@ -34,7 +34,7 @@ $messages = array(
     'suggestion.other' => 'Inna sugestia',
 
 
-    'form.select_from_list' => 'Wybierz z listy',
+    'form.select_from_list' => 'Wybierz z listy…',
     'form.save' => 'Zapisz',
 
     'common.close' => 'Zamknij',
