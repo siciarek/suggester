@@ -4,6 +4,12 @@
     {{ super() }}
     <script>
         $(document).ready(function () {
+            var parentWindow = $(parent.document);
+            var frame = parentWindow.find('iframe#__screen');
+            if (frame.attr('id') === '__screen') {
+                $('.btn.cancel').removeClass('hidden');
+            }
+
             $('#suggestion-form')
                     .on('submit', function() {
                         var self = $(this);
@@ -23,8 +29,6 @@
                     })
                     .on('click', '.btn.cancel', function (e) {
                         e.preventDefault();
-                        var parentWindow = $(parent.document);
-                        var frame = parentWindow.find('iframe#__screen');
 
                         if (frame.attr('id') === '__screen') {
                             frame.attr('src', '{{ url({'for': 'frontend.prompt'}) }}');
@@ -83,6 +87,6 @@
     <br/>
 
     {{ form.render('submit', { 'class': 'btn btn-default btn-lg pull-right' }) }}
-    <button type="button" class="btn btn-default btn-lg pull-right cancel">{{ 'common.close'|trans }}</button>
+    <button type="button" class="btn btn-default btn-lg pull-right hidden cancel">{{ 'common.close'|trans }}</button>
     </form>
 {% endblock %}

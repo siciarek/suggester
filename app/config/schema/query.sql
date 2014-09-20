@@ -27,10 +27,10 @@ CREATE TABLE `suggestion` (
   COLLATE = utf8_unicode_ci;
 
 INSERT INTO `suggestion_type` (`id`, `name`) VALUES
-(1, 'comment'),
-(2, 'error'),
-(3, 'feature_request'),
-(4, 'change_request'),
+(1, 'error'),
+(2, 'feature_request'),
+(3, 'change_request'),
+(4, 'comment'),
 (5, 'other');
 
 SHOW CREATE TABLE `suggestion`\G
