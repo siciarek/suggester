@@ -125,8 +125,8 @@ function __toggleSuggester() {
     }
 }
 
-var __screen = '<div id="__suggester_window" style="display:none"><iframe src="' + suggesterFormPage + '" id="__screen"></iframe></div>';
+var __screen           = '<div id="__suggester_window" style="display:none"><iframe src="' + suggesterFormPage + '" id="__screen"></iframe></div>';
 var __suggester_button = '<a onclick="__toggleSuggester()" id="__suggester_button" title="' + suggesterTitle + '">&laquo;</a>';
-var __content = __content_style + __screen + __suggester_button;
+var __content          = __content_style + __screen + __suggester_button;
 
 document.write(__content);
