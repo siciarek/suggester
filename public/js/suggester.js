@@ -12,7 +12,7 @@ var suggesterWindowWidth = 600;
 var suggesterWindowHeight = 480;
 var timerlen = 5;
 var slideAniLen = 500;
-var suggesterTitle = 'Suggester'
+var suggesterTitle = suggesterApp;
 
 var __content_style = '\
 <style type="text/css"> \
