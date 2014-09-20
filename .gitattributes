@@ -1,4 +1,5 @@
 # These files are text and should be normalized (convert crlf => lf)
+*.js      text
 *.php     text
 *.conf    text
 *.yml     text
@@ -13,5 +14,5 @@
 # (binary is a macro for -text -diff)
 *.png     binary
 *.gif     binary
-*.jpg    binary
+*.jpg     binary
 *.jpeg    binary
