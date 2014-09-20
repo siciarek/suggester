@@ -1,17 +1,15 @@
-# Set the default behavior, in case people don't have core.autocrlf set.
-* text=auto
-
 # These files are text and should be normalized (convert crlf => lf)
-*.js      text
-*.php     text
-*.conf    text
-*.yml     text
-*.volt    text
-*.xml     text
-*.bat     text
-*.dist    text
-*.svg     text
-*.sql     text
+*.js      text eol=lf
+*.php     text eol=lf
+*.conf    text eol=lf
+*.yml     text eol=lf
+*.json    text eol=lf
+*.volt    text eol=lf
+*.xml     text eol=lf
+*.bat     text eol=lf
+*.dist    text eol=lf
+*.svg     text eol=lf
+*.sql     text eol=lf
 
 # Images should be treated as binary
 # (binary is a macro for -text -diff)
