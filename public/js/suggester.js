@@ -114,6 +114,7 @@ function slideStop(objname) {
     delete(dir[objname]);
 }
 
+
 function __toggleSuggester() {
     var screen = document.getElementById('__suggester_window');
 
