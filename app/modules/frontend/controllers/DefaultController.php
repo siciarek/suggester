@@ -77,8 +77,10 @@ class DefaultController extends CommonController {
 
         $source = $data->getQuery()->execute()->toArray();
 
-        $objPHPExcel = new \PHPExcel();
-        $sheet = $objPHPExcel->getActiveSheet();
+        $xls = new \PHPExcel();
+        $sheet = $xls
+            ->getActiveSheet()
+            ->setTitle($trans->query('suggestion.list'));
 
         if (count($source) > 0) {
             $headers = array_map(function ($e) use ($trans) {
@@ -88,7 +90,6 @@ class DefaultController extends CommonController {
             array_unshift($source, $headers);
 
             $sheet
-                ->setTitle($trans->query('suggestion.list'))
                 ->setSelectedCellByColumnAndRow(0, 1)
                 ->fromArray(
                     $source
@@ -105,8 +106,8 @@ class DefaultController extends CommonController {
             $sheet->setAutoFilterByColumnAndRow(0, 1, count($headers) - 1, $sheet->getHighestDataRow());
         }
 
-        $objWriter = \PHPExcel_IOFactory::createWriter($objPHPExcel, $format === 'xls' ? 'Excel5' : 'Excel2007');
-        $objWriter->save($tmpfname);
+        \PHPExcel_IOFactory::createWriter($xls, $format === 'xls' ? 'Excel5' : 'Excel2007')
+            ->save($tmpfname);
 
 
         $contentType = $format === 'xls' ? 'application/vnd.ms-excel' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
