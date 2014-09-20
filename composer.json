@@ -1,5 +1,6 @@
 {
     "require": {
+        "phpoffice/phpexcel": "1.8.0",
         "phalcon/devtools": "dev-master",
         "phalcon/incubator": "dev-master"
     },

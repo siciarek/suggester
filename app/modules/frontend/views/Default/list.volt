@@ -18,6 +18,20 @@
         {{ 'suggestion.list'|trans }} ({{ items.count() }})
     </h1>
 
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}" class="btn btn-default btn-lg pull-right">
+                <i class="fa fa-table fa-lg fa=fw text-muted"></i>&nbsp;
+                {{ 'common.download_excel'|trans }}
+            </a>
+        </div>
+    </div>
+
+    <br/>
+
     {% if items|length == 0 %}
         <div class="alert alert-warning">{{ 'common.list_is_empty'|trans }}</div>
     {% else %}

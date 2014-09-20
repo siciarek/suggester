@@ -7,16 +7,18 @@ $messages = array(
     'errors.invalid_type' => 'Niewłaściwy typ',
     'errors.invalid_priority' => 'Niewłaściwy priorytet',
 
-    'priority.M' => 'Musi zostać wprowadzona',
-    'priority.S' => 'Powinna zostać wprowadzona',
-    'priority.C' => 'Mogłaby zostać wprowadzona',
-    'priority.W' => 'Może kiedyś możnaby o niej pomyśleć',
+    'priority.M' => 'musi zostać wprowadzona',
+    'priority.S' => 'powinna zostać wprowadzona',
+    'priority.C' => 'mogłaby zostać wprowadzona',
+    'priority.W' => 'możnaby kiedyś o niej pomyśleć',
 
     'suggestion.name' => 'Sugestia',
     'suggestion.plural_name' => 'Sugestie',
     'suggestion.list' => 'Lista sugestii',
 
+    'suggestion.id' => 'Id',
     'suggestion.type' => 'Typ',
+    'suggestion.type_id' => 'Typ',
     'suggestion.application' => 'Aplikacja',
     'suggestion.priority' => 'Zmiana',
     'suggestion.content' => 'Opis',
@@ -37,6 +39,7 @@ $messages = array(
     'form.select_from_list' => 'Wybierz z listy…',
     'form.save' => 'Zapisz',
 
+    'common.download_excel' => 'Pobierz XLS',
     'common.close' => 'Zamknij',
     'common.anonymous' => 'Autor anonimowy',
     'common.priority' => 'Priorytet',

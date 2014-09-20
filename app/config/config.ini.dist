@@ -2,6 +2,7 @@
 locale = pl
 env   = dev
 name  = Suggester
+version = 1.0
 short_name = suggester
 description = Simple suggester for PHP Phalcon applications.
 secret = d41d8cd98f00b204e9800998ecf8427e

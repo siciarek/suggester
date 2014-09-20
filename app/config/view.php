@@ -102,6 +102,7 @@ $di->set('view', function () use ($di) {
     ));
 
     $view->setVar('app_name', $di->getConfig()->application->name);
+    $view->setVar('app_version', $di->getConfig()->application->version);
     $view->setVar('app_short_name', $di->getConfig()->application->short_name);
     $view->setVar('app_description', $di->getConfig()->application->description);
 

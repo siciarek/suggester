@@ -16,6 +16,7 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
     Zakładając że odwiedzę stronę "/"
     I nie zobaczę tekstu "Sugestia dodana z domyślnymi ustawieniami formularza."
     Jeżeli odwiedzę stronę "/form?application=Suggester"
+    I wybiorę opcję "1" w polu "type_id"
     I wypełnię pole "content" wartością "Sugestia dodana z domyślnymi ustawieniami formularza."
     I wypełnię ukryte pole "author" wartością "Acceptance Test"
     I nacisnę przycisk "Zapisz"

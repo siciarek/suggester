@@ -24,17 +24,23 @@ class SuggestionForm extends CommonForm {
 
         $this->setEntity($data);
 
+        /**
+         * @var \Phalcon\Translate\Adapter\NativeArray $trans
+         */
         $trans = $this->getDI()->getTrans();
 
         $author = array_key_exists('author', $options) ? $options['author'] : $trans->query('common.anonymous');
         $application = array_key_exists('application', $options) ? $options['application'] : null;
 
         $priorities = array();
-        foreach (['C', 'M', 'S', 'W'] as $p) {
-            $priorities[$p] = mb_convert_case($trans->query('priority.' . $p), MB_CASE_LOWER, 'UTF-8');
+        foreach (['M', 'S', 'C', 'W'] as $p) {
+            $priorities[$p] = $trans->query('priority.' . $p);
         }
         $controls = array();
-        $controls[] = (new Select('priority', $priorities, ['required' => true]))
+        $controls[] = (new Select('priority', $priorities, [
+            'required' => true,
+        ]))
+            ->setDefault('C')
             ->setLabel($trans->query('suggestion.priority'))
             ->addFilter('trim')
             ->addValidators(
