@@ -6,10 +6,13 @@
         {{ 'suggestion.confirmation'|trans }}
     </div>
     <div class="buttons">
-            <a id="cancel-button" href="#"
-               class="btn btn-default btn-lg">{{ 'common.no'|trans }}</a>
-            <a href="{{ url({ 'for' : 'frontend.form'}) }}"
-               class="btn btn-default btn-lg">{{ 'common.yes'|trans }}</a>
+        <a href="#" class="btn btn-default btn-lg cancel hidden">{{ 'common.no'|trans }}</a>
+
+        <form method="get" action="{{ url({ 'for' : 'frontend.form'}) }}" style="display:inline">
+            <input type="hidden" name="application" value="{{ options['application'] }}"/>
+            <input type="hidden" name="author" value="{{ options['author'] }}"/>
+            <input type="submit" class="btn btn-default btn-lg" value="{{ 'common.yes'|trans }}"/>
+        </form>
     </div>
 {% endblock %}
 
@@ -17,10 +20,15 @@
     {{ super() }}
     <script>
         $(document).ready(function () {
-            $('#cancel-button').click(function (e) {
+            var parentWindow = $(parent.document);
+            var frame = parentWindow.find('iframe#__screen');
+
+            if (frame.attr('id') === '__screen') {
+                $('.btn.cancel').removeClass('hidden');
+            }
+
+            $('.btn.cancel').click(function (e) {
                 e.preventDefault();
-                var parentWindow = $(parent.document);
-                var frame = parentWindow.find('iframe#__screen');
 
                 if (frame.attr('id') === '__screen') {
                     frame.attr('src', '{{ url({'for': 'frontend.prompt'}) }}');

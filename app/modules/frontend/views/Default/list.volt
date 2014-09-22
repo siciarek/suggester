@@ -5,8 +5,8 @@
     <script>
         $(document).ready(function () {
             $('table.suggestions-table').on('click', '.btn.delete', function (e) {
-                e.preventDefault();
-                alert('Not implemented yet.');
+//                e.preventDefault();
+//                alert('Not implemented yet.');
             });
         });
     </script>
@@ -66,7 +66,7 @@
                     <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>
                     <td>{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
                     <td>
-                        <a href="#" title="{{ 'common.remove'|trans }}" class="btn btn-danger btn-xs delete">
+                        <a href="{{ url({'for': 'frontend.remove', 'id': i.getId() }) }}" title="{{ 'common.remove'|trans }}" class="btn btn-danger btn-xs delete">
                             <i class="fa fa-times-circle fa-fw"></i>
                         </a>
                     </td>

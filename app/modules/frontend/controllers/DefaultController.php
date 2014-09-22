@@ -131,12 +131,31 @@ class DefaultController extends CommonController {
     }
 
     /**
-     * @Get("/form", name="frontend.form")
-     * @Post("/form")
+     * @Route("/remove/{id:[1-9]\d*}", name="frontend.remove")
+     */
+    public function removeAction($id) {
+
+        $item = Suggestion::findFirst(['id = ' . $id . '',]);
+
+        if ($item instanceof Suggestion) {
+            // TODO: handle exception
+            $item->delete();
+        }
+
+        $url = $this->request->getHTTPReferer();
+        $url = trim($url);
+        $url = empty($url) ? $url : $this->getDI()->getUrl()->get(['for' => 'frontend.list']);
+
+        $this->response->redirect($url, true);
+    }
+
+    /**
+     * @Route("/form", name="frontend.form")
      */
     public function formAction() {
 
         $data = $_POST;
+
         $options = [
             'application' => $this->request->get('application'),
             'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
@@ -150,7 +169,14 @@ class DefaultController extends CommonController {
             if ($form->isValid()) {
                 $entity->setCreatedAt(date('Y-m-d H:i:s'));
                 $entity->save();
-                return $this->response->redirect(['for' => 'frontend.prompt']);
+
+                $router = $this->getDi()->getUrl();
+
+                $url = $router->get(['for' => 'frontend.prompt']) . '?' .
+                    http_build_query(['application' => $options['application'], 'author' => $options['author']]);
+                $url = sprintf('%s://%s%s', $this->request->getScheme(), $this->request->getHttpHost(), $url);
+
+                return $this->response->redirect($url, false);
             }
         }
 
@@ -162,5 +188,11 @@ class DefaultController extends CommonController {
      */
     public function promptAction() {
 
+        $options = [
+            'application' => $this->request->get('application'),
+            'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
+        ];
+
+        $this->view->options = $options;
     }
 }

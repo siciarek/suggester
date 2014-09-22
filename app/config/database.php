@@ -2,17 +2,24 @@
 
 // Set the database service
 $di->set('db', function () use ($di) {
-    return new \Phalcon\Db\Adapter\Pdo\Mysql(array(
-        'host' => $di->get('config')->database->host,
-        'username' => $di->get('config')->database->username,
-        'password' => $di->get('config')->database->password,
-        'dbname' => $di->get('config')->database->dbname,
-        'charset' => $di->get('config')->database->charset,
+
+    $db = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+        'host'     => $di->getConfig()->database->host,
+        'username' => $di->getConfig()->database->username,
+        'password' => $di->getConfig()->database->password,
+        'dbname'   => $di->getConfig()->database->dbname,
+        'charset'  => $di->getConfig()->database->charset,
         'options' => array(
             PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"',
             PDO::ATTR_CASE => PDO::CASE_LOWER
         )
     ));
+
+    $db = new \Phalcon\Db\Adapter\Pdo\Sqlite(array(
+        'dbname' => $di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $di->getConfig()->database->dbname . '.sqlite'
+    ));
+
+    return $db;
 });
 
 $di->set('fixtures', function () {

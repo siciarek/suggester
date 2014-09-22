@@ -1,6 +1,6 @@
 [application]
 locale = pl
-env   = dev
+env   = prod
 name  = Suggester
 version = 1.0
 short_name = suggester
@@ -16,6 +16,7 @@ tasks        = /tasks
 cache        = /cache
 temp         = /cache/temp
 tests        = /../tests
+data         = /../data
 translations = /config/translations
 
 [database]
@@ -31,7 +32,7 @@ name = SUGGESTER
 type = default
 
 [pager]
-limit = 10
+limit = 15
 length = 5
 
 [security]
