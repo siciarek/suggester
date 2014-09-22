@@ -3,31 +3,36 @@
 // Set the database service
 $di->set('db', function () use ($di) {
 
-    $db = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
-        'host'     => $di->getConfig()->database->host,
-        'username' => $di->getConfig()->database->username,
-        'password' => $di->getConfig()->database->password,
-        'dbname'   => $di->getConfig()->database->dbname,
-        'charset'  => $di->getConfig()->database->charset,
-        'options' => array(
-            PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"',
-            PDO::ATTR_CASE => PDO::CASE_LOWER
-        )
-    ));
+    $db = null;
+    $dbconfig = $di->getConfig()->database;
 
-    $db = new \Phalcon\Db\Adapter\Pdo\Sqlite(array(
-        'dbname' => $di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $di->getConfig()->database->dbname . '.sqlite'
-    ));
+    if ($dbconfig->adapter === 'mysql') {
+        $db = new \Phalcon\Db\Adapter\Pdo\Mysql(array(
+            'host' => $di->getConfig()->database->host,
+            'username' => $di->getConfig()->database->username,
+            'password' => $di->getConfig()->database->password,
+            'dbname' => $di->getConfig()->database->dbname,
+            'charset' => $di->getConfig()->database->charset,
+            'options' => array(
+                PDO::MYSQL_ATTR_INIT_COMMAND => 'SET NAMES "utf8"',
+                PDO::ATTR_CASE => PDO::CASE_LOWER
+            )
+        ));
+    } elseif ($dbconfig->adapter === 'sqlite') {
+        $db = new \Phalcon\Db\Adapter\Pdo\Sqlite(array(
+            'dbname' => $di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $di->getConfig()->database->dbname . '.sqlite'
+        ));
+    } else {
+        throw new \Exception('Unsupported database adapter: ' . $di->adapter);
+    }
 
     return $db;
 });
 
 $di->set('fixtures', function () {
 
-    class Fixtures
-    {
-        public function getData($key, $fileName = null)
-        {
+    class Fixtures {
+        public function getData($key, $fileName = null) {
             $data_dir = APPLICATION_PATH . '/config/fixtures';
             $fileName = $fileName === null ? $key : $fileName;
             $file = $data_dir . DIRECTORY_SEPARATOR . $fileName . '.yml';
@@ -49,7 +54,7 @@ $di->set('fixtures', function () {
     return new \Fixtures();
 });
 
-$di->set('modelsMetadata', function() use ($di) {
+$di->set('modelsMetadata', function () use ($di) {
 
     $metaDataDir = $di->getConfig()->dirs->cache . DIRECTORY_SEPARATOR . 'metadata' . DIRECTORY_SEPARATOR;
 

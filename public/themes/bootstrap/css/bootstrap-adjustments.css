@@ -28,8 +28,15 @@ textarea {
     padding: 15px;
 }
 
-select.form-control option:first-child[value=""],
+select.form-control.empty {
+    color: #CCCCCC;
+}
+
+select.form-control.empty option {
+    color: #555555;
+}
+
+select.form-control option[value=""],
 .form-control::-moz-placeholder {
-    color: #CCC;
-    opacity: 1;
+    color: #CCCCCC;
 }

@@ -14,17 +14,6 @@ var timerlen = 5;
 var slideAniLen = 500;
 var suggesterTitle = suggesterApp;
 
-var __content_style = '\
-<style type="text/css"> \
-iframe#__screen { border:0; position:relative; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; right:0; top:0; z-index:32000 } \
-a#__suggester_button { text-decoration: none!important; text-align: center; line-height: 36px; font-size: 32pt; font-weight: bold; \
-   background-color:#EEEEEE; color:#888888; cursor:pointer; position:fixed !important; width: ' + suggesterToggleButtonWidth + 'px; height: ' + suggesterToggleButtonHeight + 'px; \
-   right: 0; top: 0; z-index: 32000 } \
-div#__suggester_window { display:none; overflow:hidden; position:fixed; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; \
-right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border: 4px solid #EEEEEE; border-top:0; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \ \
-background-color:#EEEEEE } \
-</style>';
-
 var timerID = [];
 var startTime = [];
 var obj = [];
@@ -119,14 +108,23 @@ function __toggleSuggester() {
 
     if (screen.style.display == 'block') {
         hidePage('__suggester_window');
+        document.getElementById('__screen').contentDocument.location.reload(true);
     }
     else {
         showPage('__suggester_window');
     }
 }
 
+var __style = '<style type="text/css"> \
+iframe#__screen { border:0; position:relative; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; right:0; top:0; z-index:32000 } \
+a#__suggester_button { text-decoration: none!important; text-align: center; line-height: 36px; font-size: 32pt; font-weight: bold; \
+   background-color:#EEEEEE; color:#888888; cursor:pointer; position:fixed !important; width: ' + suggesterToggleButtonWidth + 'px; height: ' + suggesterToggleButtonHeight + 'px; \
+   right: 0; top: 0; z-index: 32000 } \
+div#__suggester_window { display:none; overflow:hidden; position:fixed; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; \
+right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border: 4px solid #EEEEEE; border-top:0; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \
+background-color:#EEEEEE } \
+</style>';
 var __screen           = '<div id="__suggester_window" style="display:none"><iframe src="' + suggesterFormPage + '" id="__screen"></iframe></div>';
 var __suggester_button = '<a onclick="__toggleSuggester()" id="__suggester_button" title="' + suggesterTitle + '">&laquo;</a>';
-var __content          = __content_style + __screen + __suggester_button;
 
-document.write(__content);
+document.write(__style + __screen + __suggester_button);

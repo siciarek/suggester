@@ -10,7 +10,17 @@
                 $('.btn.cancel').removeClass('hidden');
             }
 
+            $('#suggestion-form').find('select[name=type_id]').addClass('empty');
+
             $('#suggestion-form')
+                    .on('change', 'select[name=type_id]', function() {
+                        if($(this).val() === '') {
+                            $(this).addClass('empty');
+                        }
+                        else {
+                            $(this).removeClass('empty');
+                        }
+                    })
                     .on('submit', function() {
                         var self = $(this);
                         var button = self.find('*[type=submit]');
@@ -31,7 +41,6 @@
                         e.preventDefault();
 
                         if (frame.attr('id') === '__screen') {
-                            frame.attr('src', '{{ url({'for': 'frontend.prompt'}) }}');
                             parentWindow.find('#__suggester_button').trigger('click');
                         }
                     });
