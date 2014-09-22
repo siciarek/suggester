@@ -26,6 +26,7 @@
                         var button = self.find('*[type=submit]');
 
                         if(self.find('textarea').val().trim().length > 0) {
+                            $('div.wait').removeClass('hidden');
                             button.addClass('disabled');
                         }
                     })
@@ -64,6 +65,19 @@
         .btn.cancel {
             margin-right: 12px;
         }
+
+        div.wait {
+            background-image: url(/images/spinner.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgba(255,255,255,0.5);
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            z-index: 64000;
+        }
     </style>
 {% endblock %}
 
@@ -98,4 +112,6 @@
     {{ form.render('submit', { 'class': 'btn btn-default btn-lg pull-right' }) }}
     <button type="button" class="btn btn-default btn-lg pull-right hidden cancel">{{ 'common.close'|trans }}</button>
     </form>
+
+    <div class="wait hidden"></div>
 {% endblock %}
