@@ -4,28 +4,40 @@
     {{ super() }}
     <script>
         $(document).ready(function () {
-            var parentWindow = $(parent.document);
-            var frame = parentWindow.find('iframe#__screen');
-            if (frame.attr('id') === '__screen') {
-                $('.btn.cancel').removeClass('hidden');
+
+            var parentWindow = null;
+            var frame = null;
+
+            try {
+                if (parent.document !== 'undefined') {
+                    parentWindow = $(parent.document);
+                    frame = parentWindow.find('iframe#__screen');
+                }
+            }
+            catch (e) {
+
             }
 
-            $('#suggestion-form').find('select[name=type_id]').addClass('empty');
+            var btnCancel = $('.btn.cancel');
+
+            if (frame !== null && frame.attr('id') === '__screen') {
+                btnCancel.removeClass('hidden');
+            }
 
             $('#suggestion-form')
-                    .on('change', 'select[name=type_id]', function() {
-                        if($(this).val() === '') {
+                    .on('change', 'select[name=type_id]', function () {
+                        if ($(this).val() === '') {
                             $(this).addClass('empty');
                         }
                         else {
                             $(this).removeClass('empty');
                         }
                     })
-                    .on('submit', function() {
+                    .on('submit', function () {
                         var self = $(this);
                         var button = self.find('*[type=submit]');
 
-                        if(self.find('textarea').val().trim().length > 0) {
+                        if (self.find('textarea').val().trim().length > 0) {
                             $('div.wait').removeClass('hidden');
                             button.addClass('disabled');
                         }
@@ -33,18 +45,18 @@
                     .on('click', '*[type=submit]', function (e) {
                         var self = $(this);
                         var form = self.parent();
-                        form.find('*[name=page_url]').val(parent.location.href);
                         form.find('textarea').val(form.find('textarea').val().trim());
-
                         form.submit();
                     })
                     .on('click', '.btn.cancel', function (e) {
                         e.preventDefault();
 
-                        if (frame.attr('id') === '__screen') {
+                        if (frame !== null && frame.attr('id') === '__screen') {
                             parentWindow.find('#__suggester_button').trigger('click');
                         }
-                    });
+                    })
+                    .find('select[name=type_id]').addClass('empty')
+            ;
         });
     </script>
 {% endblock %}
@@ -70,10 +82,10 @@
             background-image: url(/images/spinner.gif);
             background-repeat: no-repeat;
             background-position: center;
-            background-color: rgba(255,255,255,0.5);
+            background-color: rgba(255, 255, 255, 0.5);
             position: absolute;
-            top:0;
-            left:0;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             z-index: 64000;

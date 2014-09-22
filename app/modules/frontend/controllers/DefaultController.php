@@ -158,8 +158,23 @@ class DefaultController extends CommonController {
 
         $options = [
             'application' => $this->request->get('application'),
+            'page_url' => $this->request->get('page_url'),
             'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
         ];
+
+        // Routing with parameters fix:
+        foreach ($_GET as $key => $val) {
+            if ($key === '_url') {
+                continue;
+            }
+
+            if (!array_key_exists($key, $options)) {
+                $par = '&' . $key . '=' . $val;
+                if (!preg_match(('/&' . $key . '=/'), $options['page_url'])) {
+                    $options['page_url'] .= $par;
+                }
+            }
+        }
 
         $form = new SuggestionForm(new Suggestion(), $options);
 
@@ -173,7 +188,7 @@ class DefaultController extends CommonController {
                 $router = $this->getDi()->getUrl();
 
                 $url = $router->get(['for' => 'frontend.prompt']) . '?' .
-                    http_build_query(['application' => $options['application'], 'author' => $options['author']]);
+                    http_build_query($options);
                 $url = sprintf('%s://%s%s', $this->request->getScheme(), $this->request->getHttpHost(), $url);
 
                 return $this->response->redirect($url, false);
@@ -190,6 +205,7 @@ class DefaultController extends CommonController {
 
         $options = [
             'application' => $this->request->get('application'),
+            'page_url' => $this->request->get('page_url'),
             'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
         ];
 

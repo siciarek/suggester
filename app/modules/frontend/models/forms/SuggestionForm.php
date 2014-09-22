@@ -31,6 +31,7 @@ class SuggestionForm extends CommonForm {
 
         $author = array_key_exists('author', $options) ? $options['author'] : $trans->query('common.anonymous');
         $application = array_key_exists('application', $options) ? $options['application'] : null;
+        $page_url = array_key_exists('page_url', $options) ? $options['page_url'] : null;
 
         $priorities = array();
         foreach (['M', 'S', 'C', 'W'] as $p) {
@@ -83,7 +84,7 @@ class SuggestionForm extends CommonForm {
             ));
 
         $controls[] = (new Hidden('page_url', array(
-            'value' => null,
+            'value' => $page_url,
         )))
             ->addFilter('trim')
             ->addFilter('null');

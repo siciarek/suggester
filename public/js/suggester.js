@@ -1,10 +1,12 @@
 var scriptParams = document.getElementById('suggester-script');
 var suggesterApp = scriptParams.getAttribute('data-value');
 var suggesterAuthor = scriptParams.getAttribute('data-from');
+var suggesterPageUrl = location.href.replace(/&/, '&amp;');
 
 suggesterApp = suggesterApp === null ? '' : suggesterApp;
 suggesterAuthor = suggesterAuthor === null ? '' : suggesterAuthor;
-var suggesterFormPage = '/form?application=' + suggesterApp + '&author=' + suggesterAuthor;
+var suggesterFormPage = document.getElementById('suggester-script').getAttribute('src').replace(/js\/.*$/,
+    ('form?application=' + suggesterApp + '&author=' + suggesterAuthor + '&page_url=' + suggesterPageUrl));
 
 var suggesterToggleButtonWidth = 48;
 var suggesterToggleButtonHeight = 48;
@@ -115,13 +117,14 @@ function __toggleSuggester() {
     }
 }
 
-var __style = '<style type="text/css"> \
+var __style = ' \
+<style type="text/css"> \
 iframe#__screen { border:0; position:relative; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; right:0; top:0; z-index:32000 } \
-a#__suggester_button { text-decoration: none!important; text-align: center; line-height: 36px; font-size: 32pt; font-weight: bold; \
+a#__suggester_button { text-decoration: none!important; text-align: center; line-height: 36px; font-family:serif; font-size: 32pt; font-weight: bold; \
    background-color:#EEEEEE; color:#888888; cursor:pointer; position:fixed !important; width: ' + suggesterToggleButtonWidth + 'px; height: ' + suggesterToggleButtonHeight + 'px; \
    right: 0; top: 0; z-index: 32000 } \
 div#__suggester_window { display:none; overflow:hidden; position:fixed; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; \
-right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border: 4px solid #EEEEEE; border-top:0; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \
+right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border: 4px solid #EEEEEE; border-color:#EEEEEE !important; border-top:0 !important; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \
 background-color:#EEEEEE } \
 </style>';
 var __screen           = '<div id="__suggester_window" style="display:none"><iframe src="' + suggesterFormPage + '" id="__screen"></iframe></div>';

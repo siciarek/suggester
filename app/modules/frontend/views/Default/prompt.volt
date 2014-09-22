@@ -12,6 +12,7 @@
         <form method="get" action="{{ url({ 'for' : 'frontend.form'}) }}">
             <input type="hidden" name="application" value="{{ options['application'] }}"/>
             <input type="hidden" name="author" value="{{ options['author'] }}"/>
+            <input type="hidden" name="page_url" value="{{ options['page_url'] }}"/>
             <input type="submit" class="btn btn-default btn-lg" value="{{ 'common.yes'|trans }}"/>
         </form>
     </div>
@@ -24,18 +25,29 @@
     {{ super() }}
     <script>
         $(document).ready(function () {
-            var parentWindow = $(parent.document);
-            var frame = parentWindow.find('iframe#__screen');
+            var parentWindow = null;
+            var frame = null;
+
+            try {
+                if (parent.document !== 'undefined') {
+                    parentWindow = $(parent.document);
+                    frame = parentWindow.find('iframe#__screen');
+                }
+            }
+            catch (e) {
+
+            }
+
             var btnCancel = $('.btn.cancel');
 
-            if (frame.attr('id') === '__screen') {
+            if (frame !== null && frame.attr('id') === '__screen') {
                 btnCancel.removeClass('hidden');
             }
 
             btnCancel.click(function (e) {
                 e.preventDefault();
 
-                if (frame.attr('id') === '__screen') {
+                if (frame !== null && frame.attr('id') === '__screen') {
                     frame.attr('src', '{{ url({'for': 'frontend.prompt'}) }}');
                     parentWindow.find('#__suggester_button').trigger('click');
                 }
