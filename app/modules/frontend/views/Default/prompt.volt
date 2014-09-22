@@ -1,19 +1,23 @@
 {% extends 'templates/base.volt' %}
 
 {% block content %}
-    <div class="alert alert-success">
+
+    <div class="alert alert-info">
         <i class="fa fa-check-square-o fa-fw fa-lg"></i>
         {{ 'suggestion.confirmation'|trans }}
     </div>
     <div class="buttons">
         <a href="#" class="btn btn-default btn-lg cancel hidden">{{ 'common.no'|trans }}</a>
 
-        <form method="get" action="{{ url({ 'for' : 'frontend.form'}) }}" style="display:inline">
+        <form method="get" action="{{ url({ 'for' : 'frontend.form'}) }}">
             <input type="hidden" name="application" value="{{ options['application'] }}"/>
             <input type="hidden" name="author" value="{{ options['author'] }}"/>
             <input type="submit" class="btn btn-default btn-lg" value="{{ 'common.yes'|trans }}"/>
         </form>
     </div>
+
+    <div class="wait hidden"></div>
+
 {% endblock %}
 
 {% block javascripts %}
@@ -22,18 +26,23 @@
         $(document).ready(function () {
             var parentWindow = $(parent.document);
             var frame = parentWindow.find('iframe#__screen');
+            var btnCancel = $('.btn.cancel');
 
             if (frame.attr('id') === '__screen') {
-                $('.btn.cancel').removeClass('hidden');
+                btnCancel.removeClass('hidden');
             }
 
-            $('.btn.cancel').click(function (e) {
+            btnCancel.click(function (e) {
                 e.preventDefault();
 
                 if (frame.attr('id') === '__screen') {
                     frame.attr('src', '{{ url({'for': 'frontend.prompt'}) }}');
                     parentWindow.find('#__suggester_button').trigger('click');
                 }
+            });
+
+            $('form').on('submit', function(){
+                $('div.wait').removeClass('hidden');
             });
         });
     </script>
@@ -42,6 +51,8 @@
 {% block stylesheets %}
     {{ super() }}
     <style>
+
+
         .buttons {
             text-align: right;
         }
@@ -53,6 +64,23 @@
 
         .btn {
             width: 150px;
+        }
+
+        form {
+            display: inline;
+        }
+
+        div.wait {
+            background-image: url(/images/spinner.gif);
+            background-repeat: no-repeat;
+            background-position: center;
+            background-color: rgba(255,255,255,0.5);
+            position: absolute;
+            top:0;
+            left:0;
+            width: 100%;
+            height: 100%;
+            z-index: 64000;
         }
     </style>
 {% endblock %}
