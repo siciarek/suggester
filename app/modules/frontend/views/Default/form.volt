@@ -27,11 +27,10 @@
 
             $('#suggestion-form')
                     .on('change', 'select[name=type_id]', function () {
-                        if ($(this).val() === '') {
+                        $(this).removeClass('empty');
+
+                        if ($(this).val().trim() === '') {
                             $(this).addClass('empty');
-                        }
-                        else {
-                            $(this).removeClass('empty');
                         }
                     })
                     .on('submit', function () {
