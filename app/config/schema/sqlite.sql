@@ -12,6 +12,7 @@ CREATE TABLE suggestion (
   `author` TEXT,
   `content` TEXT,
   `page_url` TEXT,
+  `agent` TEXT,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`)
 );

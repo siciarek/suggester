@@ -40,6 +40,7 @@ class DbTask extends \Phalcon\CLI\Task
 
             case 'sqlite':
 
+                $dbfile = $this->di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $this->di->get('config')->database->dbname . '.sqlite';
                 $db = new SQLite3($dbfile);
                 $db->exec($this->sql);
                 break;

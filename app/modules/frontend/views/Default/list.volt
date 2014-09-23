@@ -5,8 +5,12 @@
     <script>
         $(document).ready(function () {
             $('table.suggestions-table').on('click', '.btn.delete', function (e) {
-//                e.preventDefault();
-//                alert('Not implemented yet.');
+                e.preventDefault();
+                var self = $(this);
+                if(confirm('{{ 'suggestion.removal_confirmation'|trans }}')) {
+                    $('div.wait').removeClass('hidden');
+                    location.href = self.attr('href');
+                }
             });
         });
     </script>
@@ -41,9 +45,10 @@
                 <th>#</th>
                 <th>{{ 'suggestion.application'|trans }}</th>
                 <th>{{ 'common.priority'|trans }}</th>
-                <th>{{ 'suggestion.page_url'|trans }}</th>
                 <th>{{ 'suggestion.type'|trans }}</th>
                 <th>{{ 'suggestion.content'|trans }}</th>
+                <th>{{ 'suggestion.page_url'|trans }}</th>
+                <th>{{ 'suggestion.agent'|trans }}</th>
                 <th>{{ 'suggestion.author'|trans }}</th>
                 <th>{{ 'suggestion.created_at'|trans }}</th>
                 <th>&nbsp;</th>
@@ -55,16 +60,17 @@
                     <td>{{ i.getId() }}</td>
                     <td>{{ i.getApplication() ? i.getApplication() : '&#0151;' }}</td>
                     <td><span class="badge">{{ i.getPriority() }}</span></td>
+                    <td>{{ ('suggestion.'~type[i.getTypeId()])|trans }}</td>
+                    <td><em>{{ i.getContent() }}</em></td>
                     <td>
                         {% if i.getPageUrl() %}
                         <a href="{{ i.getPageUrl() }}" target="_blank">{{ i.getPageUrl() }}</a></td>
                     {% else %}
                         &#0151;
                     {% endif %}
-                    <td>{{ ('suggestion.'~type[i.getTypeId()])|trans }}</td>
-                    <td>{{ i.getContent() }}</td>
+                    <td>{{ i.getAgent() ? i.getAgent() : '&#0151;' }}</td>
                     <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>
-                    <td>{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
+                    <td class="nowrap">{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
                     <td>
                         <a href="{{ url({'for': 'frontend.remove', 'id': i.getId() }) }}" title="{{ 'common.remove'|trans }}" class="btn btn-danger btn-xs delete">
                             <i class="fa fa-times-circle fa-fw"></i>

@@ -182,6 +182,7 @@ class DefaultController extends CommonController {
             $entity = $form->getEntity();
             $form->bind($data, $entity);
             if ($form->isValid()) {
+                $entity->setAgent($this->request->getUserAgent());
                 $entity->setCreatedAt(date('Y-m-d H:i:s'));
                 $entity->save();
 

@@ -17,8 +17,6 @@
         </form>
     </div>
 
-    <div class="wait hidden"></div>
-
 {% endblock %}
 
 {% block javascripts %}
@@ -64,7 +62,6 @@
     {{ super() }}
     <style>
 
-
         .buttons {
             text-align: right;
         }
@@ -80,19 +77,6 @@
 
         form {
             display: inline;
-        }
-
-        div.wait {
-            background-image: url(/images/spinner.gif);
-            background-repeat: no-repeat;
-            background-position: center;
-            background-color: rgba(255,255,255,0.5);
-            position: absolute;
-            top:0;
-            left:0;
-            width: 100%;
-            height: 100%;
-            z-index: 64000;
         }
     </style>
 {% endblock %}

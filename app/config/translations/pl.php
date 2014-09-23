@@ -16,13 +16,15 @@ $messages = array(
     'suggestion.plural_name' => 'Sugestie',
     'suggestion.list' => 'Lista sugestii',
 
+    'suggestion.removal_confirmation' => 'Czy na pewno chcesz usunąć tę pozycję?',
     'suggestion.id' => 'Id',
     'suggestion.type' => 'Typ',
     'suggestion.type_id' => 'Typ',
     'suggestion.application' => 'Aplikacja',
     'suggestion.priority' => 'Zmiana',
     'suggestion.content' => 'Opis',
-    'suggestion.page_url' => 'URL strony',
+    'suggestion.page_url' => 'URL',
+    'suggestion.agent' => 'Przeglądarka',
     'suggestion.author' => 'Autor',
     'suggestion.created_at' => 'Dodano',
 
