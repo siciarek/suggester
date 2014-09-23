@@ -6,6 +6,8 @@ $messages = array(
     'errors.content_is_required' => 'Opis jest wymagany.',
     'errors.invalid_type' => 'Niewłaściwy typ',
     'errors.invalid_priority' => 'Niewłaściwy priorytet',
+    'errors.value_is_too_short' => 'Podana wartość jest za krótka.',
+    'errors.value_is_too_long' => 'Podana wartość jest za długa.',
 
     'priority.M' => 'musi zostać wprowadzona',
     'priority.S' => 'powinna zostać wprowadzona',

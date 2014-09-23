@@ -24,6 +24,7 @@
                 btnCancel.removeClass('hidden');
             }
 
+
             $('#suggestion-form')
                     .on('change', 'select[name=type_id]', function () {
                         if ($(this).val() === '') {
@@ -37,7 +38,7 @@
                         var self = $(this);
                         var button = self.find('*[type=submit]');
 
-                        if (self.find('textarea').val().trim().length > 0) {
+                        if (self.find('select[name=type_id]').val().trim().length > 0 && self.find('textarea').val().trim().length > 0) {
                             $('div.wait').removeClass('hidden');
                             button.addClass('disabled');
                         }
@@ -57,6 +58,9 @@
                     })
                     .find('select[name=type_id]').addClass('empty')
             ;
+
+            $('#suggestion-form select[name=type_id]').trigger('change');
+
         });
     </script>
 {% endblock %}
@@ -89,7 +93,10 @@
     {{ form(null, 'method': 'post', 'id' : 'suggestion-form', 'class' : 'form-horizontal') }}
 
     {% for m in form.getMessages() %}
-        <div class="alert alert-warning">{{ m.getMessage()|trans }}</div>
+        <div class="alert alert-warning">
+            <i class="fa fa-warning fa-fw fa-lg"></i>
+            {{ m.getMessage()|trans }}
+        </div>
     {% endfor %}
 
     {% for field in [ 'type_id', 'content', 'priority' ] %}

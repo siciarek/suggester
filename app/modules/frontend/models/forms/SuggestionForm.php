@@ -11,6 +11,7 @@ use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\TextArea;
 use Phalcon\Validation\Validator\InclusionIn;
 use Phalcon\Validation\Validator\PresenceOf;
+use Phalcon\Validation\Validator\StringLength;
 use Application\Common\Select  as XSelect;
 
 class SuggestionForm extends CommonForm {
@@ -80,6 +81,12 @@ class SuggestionForm extends CommonForm {
             ->addValidators(array(
                 new PresenceOf(array(
                     'message' => 'errors.content_is_required',
+                )),
+                new StringLength(array(
+                    'max' => 1000,
+                    'min' => 5,
+                    'messageMaximum' => $trans->query('errors.value_is_too_long'),
+                    'messageMinimum' => $trans->query('errors.value_is_too_short'),
                 )),
             ));
 
