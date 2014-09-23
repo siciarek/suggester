@@ -7,7 +7,7 @@ CREATE TABLE suggestion_type (
 CREATE TABLE suggestion (
   `id` INTEGER PRIMARY KEY AUTOINCREMENT,
   `type_id` INT UNSIGNED NOT NULL,
-  `priority` CHAR(1) DEFAULT 'C',
+  `priority` CHAR(1) CHECK(`priority` IN ('M', 'S', 'C', 'W')) NOT NULL DEFAULT 'C',
   `application` TEXT,
   `author` TEXT,
   `content` TEXT,

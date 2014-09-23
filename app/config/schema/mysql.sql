@@ -1,7 +1,7 @@
 CREATE TABLE `suggestion_type` (
   `id` INTEGER UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,
   `name` VARCHAR(64) NOT NULL,
-  `description` VARCHAR(255) NULL
+  `description` VARCHAR(255)
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 
 CREATE TABLE `suggestion` (
