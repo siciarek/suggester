@@ -19,8 +19,10 @@ $di->set('db', function () use ($di) {
             )
         ));
     } elseif ($dbconfig->adapter === 'sqlite') {
+        $dbname = $di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $di->getConfig()->database->dbname . '.sqlite';
+
         $db = new \Phalcon\Db\Adapter\Pdo\Sqlite(array(
-            'dbname' => $di->getConfig()->dirs->data . DIRECTORY_SEPARATOR . $di->getConfig()->database->dbname . '.sqlite'
+            'dbname' => $dbname,
         ));
     } else {
         throw new \Exception('Unsupported database adapter: ' . $di->adapter);

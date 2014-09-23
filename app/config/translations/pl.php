@@ -31,7 +31,7 @@ $messages = array(
     'suggestion.created_at' => 'Dodano',
 
     'suggestion.prompt' => 'Dodaj sugestię, propozycję zmiany lub opisz zauważoną usterkę.',
-    'suggestion.confirmation' => 'Dziękujemy za dodanie wpisu. Czy chciałbyś dodać kolejny?',
+    'suggestion.confirmation' => 'Dziękujemy za dodanie wpisu. Czy chciałbyś wysłać kolejny?',
 
     'suggestion.comment' => 'Komentarz',
     'suggestion.error' => 'Usterka',
