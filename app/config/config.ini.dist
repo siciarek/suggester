@@ -20,12 +20,12 @@ data         = /../data
 translations = /config/translations
 
 [database]
-adapter  = mysql
+adapter  = sqlite
+dbname   = suggester
 charset  = utf8
 host     = localhost
 username = root
 password = null
-dbname   = suggester
 
 [session]
 name = SUGGESTER
