@@ -26,5 +26,15 @@ $di->setShared('filter', function () {
         return mb_convert_case($value, MB_CASE_TITLE, 'UTF-8');
     });
 
+    // Lower case modifier:
+    $filter->add('lower', function ($value) {
+        return mb_convert_case($value, MB_CASE_LOWER, 'UTF-8');
+    });
+
+    // Upper case modifier:
+    $filter->add('upper', function ($value) {
+        return mb_convert_case($value, MB_CASE_UPPER, 'UTF-8');
+    });
+
     return $filter;
 });
