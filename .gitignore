@@ -16,8 +16,9 @@ __pycache__
 /composer.phar
 /composer.lock
 /vendor
-/temp
+/temp*
 /data/*
+behat.yml
 
 /app/config/config.ini
 /nbproject/private/
