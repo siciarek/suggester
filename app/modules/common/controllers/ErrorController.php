@@ -3,17 +3,17 @@ namespace Application\Common\Controller;
 
 class ErrorController extends CommonController {
 
-    /**
-     * @Route("/error/404", name="common.page404")
-     */
-    public function page404Action() {
-
+    public function notFoundAction()
+    {
+        $this->response->setStatusCode(404, 'Not Found');
+        $this->view->pick('Error/notFound');
     }
 
     /**
-     * @Route("/error/403", name="common.page403")
+     * @Get("/access-forbiden", name="error.access_forbiden")
      */
-    public function page403Action() {
-
+    public function forbidenAction()
+    {
+        $this->response->setStatusCode(403, 'Forbiden');
     }
 }

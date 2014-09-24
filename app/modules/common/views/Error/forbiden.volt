@@ -39,6 +39,12 @@
                 Sprawdź czy wpisałeś właściwy adres lub skontaktuj się z administratorem systemu.
             </p>
 
+            <br/>
+
+            <a id="back-home" class="btn btn-success btn-lg" href="/">
+                <i class="fa fa-home fa-fw fa-lg"></i>
+                Powrót do strony głównej
+            </a>
         </div>
     </div>
 

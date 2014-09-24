@@ -25,9 +25,5 @@ class Module implements ModuleDefinitionInterface
             $view->setViewsDir(dirname(__FILE__) . '/views/');
             return $view;
         });
-
-        $di->set('dispatcher', function () use ($di) {
-            return $di->get('common_dispatcher');
-        });
     }
 }

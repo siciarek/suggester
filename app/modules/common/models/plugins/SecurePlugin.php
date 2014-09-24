@@ -8,6 +8,8 @@
 
 namespace Application\Common\Plugin;
 
+use Phalcon\Exception;
+
 class SecurePlugin extends \Phalcon\Mvc\User\Plugin
 {
     const ANNOTATION_NAME = 'Secure';
@@ -51,6 +53,16 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin
         } else {
             if (false == in_array(self::NOT_SECURED, $roles['controller'])) {
                 $required = $roles['controller'];
+            }
+        }
+
+        // TODO: implement access
+        $access = true;
+
+        // If user is logged in and tries to access forbiden page:
+        if ($access === false) {
+            if ($controller != '\Application\Common\Controller\Error') {
+                return $dispatcher->getActiveController()->response->redirect(['for' => 'error.access_forbiden']);
             }
         }
 
