@@ -77,10 +77,13 @@ class DefaultController extends CommonController {
 
         $source = $data->getQuery()->execute()->toArray();
 
+        $title = $trans->query('suggestion.list');
+        $title = preg_replace('/\*+$/', '', $title);
+
         $xls = new \PHPExcel();
         $sheet = $xls
             ->getActiveSheet()
-            ->setTitle($trans->query('suggestion.list'));
+            ->setTitle($title);
 
         if (count($source) > 0) {
             $headers = array_map(function ($e) use ($trans) {

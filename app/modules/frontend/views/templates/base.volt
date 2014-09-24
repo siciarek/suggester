@@ -22,6 +22,7 @@
                 display: inline-block;
                 list-style-type: none;
                 margin-bottom: 8px;
+                margin-top: 8px;
             }
 
             ul.i18n li {
@@ -31,7 +32,7 @@
 
             ul.i18n li a {
                 text-decoration: none;
-                padding: 3px 5px ;
+                padding: 3px 5px;
             }
 
             ul.i18n a.active {
@@ -66,9 +67,9 @@
     <ul class="i18n">
         <li><i class="fa fa-globe fa-fw fa-lg text-primary"></i></li>
         {% for l in ['pl', 'en'] %}
-        <li>
-            <a class="{% if l == this.di.getLocale() %}active{% endif %}" href="{{ url({'for':'frontend.locale', 'locale':l}) }}">{{ l }}</a>
-        </li>
+            <li>
+                <a class="{% if l == this.di.getLocale() %}active{% endif %}" href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l }}</a>
+            </li>
         {% endfor %}
     </ul>
     {% block content %}{% endblock %}

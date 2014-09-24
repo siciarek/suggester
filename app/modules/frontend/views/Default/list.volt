@@ -27,7 +27,7 @@
 
         </div>
         <div class="col-md-6">
-            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}" class="btn btn-default btn-lg pull-right">
+            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}" class="btn btn-default btn-lg pull-right{% if items.count() == 0 %} disabled{% endif %}">
                 <i class="fa fa-table fa-lg fa=fw text-muted"></i>&nbsp;
                 {{ 'common.download_excel'|trans }}
             </a>

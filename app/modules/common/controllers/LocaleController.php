@@ -1,12 +1,10 @@
 <?php
-namespace Application\Frontend\Controller;
-
-use Application\Common\Controller\CommonController;
+namespace Application\Common\Controller;
 
 class LocaleController extends CommonController {
 
     /**
-     * @Get("/locale/{locale:pl|en}", name="frontend.locale")
+     * @Get("/locale/{locale:pl|en}", name="common.locale")
      */
     public function changeAction($locale) {
 
