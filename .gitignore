@@ -10,3 +10,6 @@ public/.DS_Store
 /public/build
 /app/config/config.ini
 /data/*
+
+.deployignore
+deploy.bat
