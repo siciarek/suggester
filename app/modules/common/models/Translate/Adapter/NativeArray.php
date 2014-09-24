@@ -24,7 +24,7 @@ class NativeArray extends \Phalcon\Translate\Adapter\NativeArray {
 
             $transdir = \Phalcon\DI::getDefault()->getConfig()->dirs->translations;
             $new = [ $index => $index . '*' ];
-            $this->_translate = $new +  $this->_translate;
+            $this->_translate = $new + $this->_translate;
 
             $d = dir($transdir);
 
