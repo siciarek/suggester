@@ -16,6 +16,34 @@
         <link href="/themes/bootstrap/css/bootstrap-adjustments.css" rel="stylesheet"/>
         <link href="/themes/bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
         <style>
+            ul.i18n {
+                margin: 0;
+                padding: 0;
+                display: inline-block;
+                list-style-type: none;
+                margin-bottom: 8px;
+            }
+
+            ul.i18n li {
+                display: inline-block;
+                margin-right: 6px;
+            }
+
+            ul.i18n li a {
+                text-decoration: none;
+                padding: 3px 5px ;
+            }
+
+            ul.i18n a.active {
+                font-weight: bold;
+                background-color: #428bca;
+                color: white;
+            }
+
+            ul.i18n a:hover {
+
+            }
+
             div.wait {
                 background-image: url(/images/spinner.gif);
                 background-repeat: no-repeat;
@@ -35,6 +63,14 @@
 <body>
 
 <div class="container">
+    <ul class="i18n">
+        <li><i class="fa fa-globe fa-fw fa-lg text-primary"></i></li>
+        {% for l in ['pl', 'en'] %}
+        <li>
+            <a class="{% if l == this.di.getLocale() %}active{% endif %}" href="{{ url({'for':'frontend.locale', 'locale':l}) }}">{{ l }}</a>
+        </li>
+        {% endfor %}
+    </ul>
     {% block content %}{% endblock %}
 </div>
 

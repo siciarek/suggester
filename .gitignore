@@ -9,3 +9,4 @@ public/.DS_Store
 /temp
 /public/build
 /app/config/config.ini
+/data/*

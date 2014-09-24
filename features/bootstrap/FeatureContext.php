@@ -34,6 +34,7 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
     }
 
 
+
     /**
      * @Given że w systemie nie ma testowych danych
      */

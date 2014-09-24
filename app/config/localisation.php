@@ -8,17 +8,17 @@ $di->setShared('trans', function () use ($di) {
 
     $messages = array();
 
-    $language = $di->get('locale');
+    $locale = $di->get('locale');
     $basedir = $di->getConfig()->dirs->translations;
 
-    if (file_exists($basedir . '/' . $language . '.php')) {
-        require $basedir .  '/' . $language . '.php';
-    } else {
-        require $basedir . '/en.php';
-    }
+    require file_exists($basedir . DIRECTORY_SEPARATOR . $locale  . '.php')
+        ? $basedir . DIRECTORY_SEPARATOR . $locale  . '.php'
+        : $basedir . '/en.php';
+
+    $options = [ 'content' => $messages ];
 
     //Return a translation object
-    return new \Phalcon\Translate\Adapter\NativeArray(array(
-        'content' => $messages
-    ));
+    return $di->getConfig()->application->env === 'dev'
+        ? new \Application\Common\Translate\Adapter\NativeArray($options)
+        : new \Phalcon\Translate\Adapter\NativeArray($options);
 });

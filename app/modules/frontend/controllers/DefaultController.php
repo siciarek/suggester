@@ -144,7 +144,7 @@ class DefaultController extends CommonController {
 
         $url = $this->request->getHTTPReferer();
         $url = trim($url);
-        $url = empty($url) ? $url : $this->getDI()->getUrl()->get(['for' => 'frontend.list']);
+        $url = !empty($url) ? $url : $this->getDI()->getUrl()->get(['for' => 'frontend.list']);
 
         $this->response->redirect($url, true);
     }

@@ -1,5 +1,6 @@
 # language: pl
 
+@avail
 Potrzeba biznesowa: Sprawdzenie czy aplikacja jest dostępna
   Aby korzystać z aplikacji
   As a Użytkownik
