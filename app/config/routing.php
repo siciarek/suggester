@@ -15,13 +15,13 @@ $di->setShared('router', function () use ($di) {
 
     $resources = array(
         'common' => array(
+            'Application\Common\Controller\Test',
             'Application\Common\Controller\Locale',
             'Application\Common\Controller\Error',
         ),
         'frontend' => array(
             'Application\Frontend\Controller\Default',
             'Application\Frontend\Controller\User',
-            'Application\Frontend\Controller\Test',
         ),
     );
 
