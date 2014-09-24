@@ -17,9 +17,6 @@ class DefaultController extends CommonController {
      */
     public function listAction($format = 'html') {
 
-
-        throw new \Exception('ABC');
-
         $data = $this->modelsManager->createBuilder()
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.created_at DESC');

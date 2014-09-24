@@ -1,4 +1,4 @@
 suggester
 =========
 
-Simple suggerster in  Phalcon.
+Simple suggester in PHP Phalcon.
