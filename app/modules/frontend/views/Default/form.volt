@@ -84,17 +84,18 @@
 {% endblock %}
 
 {% block content %}
-    <div class="alert alert-info">
-        <i class="fa fa-edit fa-fw fa-lg"></i>
-        {{ 'suggestion.prompt'|trans }}
-    </div>
 
     {{ form(null, 'method': 'post', 'id' : 'suggestion-form', 'class' : 'form-horizontal') }}
 
     {% for m in form.getMessages() %}
         <div class="alert alert-warning">
             <i class="fa fa-warning fa-fw fa-lg"></i>
-            {{ m.getMessage()|trans }}
+            {{ m.getMessage() }}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fa fa-edit fa-fw fa-lg"></i>
+            {{ 'suggestion.prompt'|trans }}
         </div>
     {% endfor %}
 

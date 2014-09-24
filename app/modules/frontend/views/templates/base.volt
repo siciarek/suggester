@@ -21,7 +21,7 @@
                 padding: 0;
                 display: inline-block;
                 list-style-type: none;
-                margin-bottom: 8px;
+                margin-bottom: 12px;
                 margin-top: 8px;
             }
 
