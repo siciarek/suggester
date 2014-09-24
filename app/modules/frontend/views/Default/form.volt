@@ -103,10 +103,12 @@
         <div class="input-group">
             {{ form.label(field, { 'class' : 'input-group-addon' }) }}
             {{ form.render(field, { 'class' : 'form-control' }) }}
-            {% for m in form.get(field).getMessages() %}
-                <div class="error">{{ m.getMessage() }}</div>
-            {% endfor %}
         </div>
+        {% for m in form.get(field).getMessages() %}
+            {% if loop.first %}<ul class="text-warning">{% endif %}
+            <li>{{ m.getMessage()|trans }}</li>
+            {% if loop.last %}</ul>{% endif %}
+        {% endfor %}
     {% endfor %}
 
     {% for field in [ 'csrf', 'page_url', 'author', 'application' ] %}

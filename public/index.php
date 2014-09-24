@@ -30,11 +30,10 @@ else {
         echo $application->handle()->getContent();
     }
     catch(\Exception $e) {
-        echo '<pre>';
-        echo get_class($e), ": ", $e->getMessage(), "\n";
-        echo " File=", $e->getFile(), "\n";
-        echo " Line=", $e->getLine(), "\n";
-        echo $e->getTraceAsString();
-        echo '</pre>';
+        header($_SERVER['SERVER_PROTOCOL'] . ' 500 Internal Server Error', true, 500);
+        readfile('500.html');
+        exit;
     }
 }
+
+

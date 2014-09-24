@@ -16,6 +16,7 @@ $di->setShared('router', function () use ($di) {
     $resources = array(
         'common' => array(
             'Application\Common\Controller\Locale',
+            'Application\Common\Controller\Error',
         ),
         'frontend' => array(
             'Application\Frontend\Controller\Default',

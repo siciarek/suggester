@@ -18,6 +18,8 @@ class DefaultController extends CommonController {
     public function listAction($format = 'html') {
 
 
+        throw new \Exception('ABC');
+
         $data = $this->modelsManager->createBuilder()
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.created_at DESC');
@@ -197,21 +199,35 @@ class DefaultController extends CommonController {
 
         $form = new SuggestionForm(new Suggestion(), $options);
 
+        /**
+         * @var Suggestion $entity
+         */
         if ($this->request->getMethod() === 'POST') {
             $entity = $form->getEntity();
             $form->bind($data, $entity);
             if ($form->isValid()) {
                 $entity->setAgent($this->request->getUserAgent());
                 $entity->setCreatedAt(date('Y-m-d H:i:s'));
-                $entity->save();
+                $entity->setPageUrl(preg_replace('/^(https?:)_/', '$1//', $entity->getPageUrl() ));
 
-                $router = $this->getDi()->getUrl();
+                // TODO: create constants in Suggester class
+                $entity->setStatus('pending');
 
-                $url = $router->get(['for' => 'frontend.prompt']) . '?' .
-                    http_build_query($options);
-                $url = sprintf('%s://%s%s', $this->request->getScheme(), $this->request->getHttpHost(), $url);
+                if(false === $entity->save()) {
+                    foreach($entity->getMessages() as $m) {
+                        $form->get('content')->appendMessage(new \Phalcon\Validation\Message($m->getMessage())) ;
+                    }
+                }
+                else {
 
-                return $this->response->redirect($url, false);
+                    $router = $this->getDi()->getUrl();
+
+                    $url = $router->get(['for' => 'frontend.prompt']) . '?' .
+                        http_build_query($options);
+                    $url = sprintf('%s://%s%s', $this->request->getScheme(), $this->request->getHttpHost(), $url);
+
+                    return $this->response->redirect($url, false);
+                }
             }
         }
 

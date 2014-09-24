@@ -3,6 +3,8 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'common.search' => 'Wpisz szukaną frazę…',
+  'status is required' => 'Status jest wymagany.',
   'suggestion.status' => 'Status',
   'errors.content_is_required' => 'Opis jest wymagany.',
   'errors.invalid_type' => 'Niewłaściwy typ',

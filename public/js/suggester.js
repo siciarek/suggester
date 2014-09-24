@@ -1,7 +1,7 @@
 var scriptParams = document.getElementById('suggester-script');
 var suggesterApp = scriptParams.getAttribute('data-value');
 var suggesterAuthor = scriptParams.getAttribute('data-from');
-var suggesterPageUrl = location.href;
+var suggesterPageUrl = location.href.replace(/\/\//,'_');
 var suggesterButtonColor = '#CCCCCC';
 
 suggesterApp = suggesterApp === null ? '' : suggesterApp;
