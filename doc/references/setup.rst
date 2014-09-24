@@ -43,6 +43,56 @@ or
 
     $ and db
 
+Setting up behat
+================
+
+Open ``behat.yml.dist`` and copy commented lines
+
+
+.. code-block:: yaml
+
+    ## behat.yml
+    #
+    #imports:
+    #    resource: behat.yml.dist
+    #
+    #default:
+    #
+    #    formatters:
+    #         pretty: ~
+    #         progress: false
+    #
+    #    extensions:
+    #        Behat\MinkExtension\ServiceContainer\MinkExtension:
+    #            base_url:  http://ino.dev
+    #            files_path: features/attachments
+    #            default_session: goutte
+    #            javascript_session: selenium2
+
+into file ``behat.yml`` than uncoment them
+
+.. code-block:: yaml
+
+    # behat.yml
+
+    imports:
+        resource: behat.yml.dist
+
+    default:
+
+        formatters:
+             pretty: ~
+             progress: false
+
+        extensions:
+            Behat\MinkExtension\ServiceContainer\MinkExtension:
+                base_url:  http://ino.dev
+                files_path: features/attachments
+                default_session: goutte
+                javascript_session: selenium2
+
+then customize ``base_url`` and other behat settings.
+
 Running tests
 =============
 
