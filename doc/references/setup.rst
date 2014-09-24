@@ -26,6 +26,7 @@ Setting up configuration
     $ cp properties.cnf.dist properties.cnf
     $ cp app/config/config.ini.dist app/config/config.ini
     $ mkdir app/cache
+    $ mkdir .phalcon
 
 Content of ``properties.cnf`` and ``app/config/config.ini`` should be customized.
 
