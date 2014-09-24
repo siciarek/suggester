@@ -107,5 +107,9 @@ $di->set('view', function () use ($di) {
     $view->setVar('app_description', $di->getConfig()->application->description);
     $view->setVar('user', $di->getSession()->get('user'));
 
+    $locales = explode(',', $di->getConfig()->application->locales);
+    $locales = array_map('trim', $locales);
+    $view->setVar('locales', $locales);
+
     return $view;
 });

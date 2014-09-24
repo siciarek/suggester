@@ -1,11 +1,12 @@
 [application]
-locale = pl
-env   = prod
-name  = Suggester
+env     = prod
+locale  = pl
+locales = pl,en
 version = 1.0
-short_name = suggester
+name    = Suggester
+short_name  = suggester
 description = Simple suggester for PHP Phalcon applications.
-secret = d41d8cd98f00b204e9800998ecf8427e
+secret      = d41d8cd98f00b204e9800998ecf8427e
 
 [dirs]
 config       = /config

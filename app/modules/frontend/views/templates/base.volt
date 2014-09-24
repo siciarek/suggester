@@ -71,7 +71,7 @@
 <div class="container">
     <ul class="i18n">
         <li><i class="fa fa-globe fa-fw fa-lg text-primary"></i></li>
-        {% for l in ['pl', 'en'] %}
+        {% for l in locales %}
             <li>
                 <a class="{% if l == this.di.getLocale() %}active{% endif %}"
                    href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l }}</a>
