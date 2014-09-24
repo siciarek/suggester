@@ -3,6 +3,7 @@
 // app/config/translations/en.php
 
 $messages = array (
+  'suggestion.status' => 'Status',
   'errors.content_is_required' => 'Content is required.',
   'errors.invalid_type' => 'Invalid type.',
   'errors.invalid_priority' => 'Invalid priority.',

@@ -43,6 +43,7 @@
             <thead>
             <tr>
                 <th>#</th>
+                <th>{{ 'suggestion.status'|trans }}</th>
                 <th>{{ 'suggestion.application'|trans }}</th>
                 <th>{{ 'common.priority'|trans }}</th>
                 <th>{{ 'suggestion.type'|trans }}</th>
@@ -58,6 +59,7 @@
             {% for i in items %}
                 <tr>
                     <td>{{ i.getId() }}</td>
+                    <td>{{ i.getStatus() }}</td>
                     <td>{{ i.getApplication() ? i.getApplication() : '&#0151;' }}</td>
                     <td><span class="badge">{{ i.getPriority() }}</span></td>
                     <td>{{ ('suggestion.'~type[i.getTypeId()])|trans }}</td>

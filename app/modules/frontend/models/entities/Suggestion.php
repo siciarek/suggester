@@ -60,6 +60,12 @@ class Suggestion extends \Phalcon\Mvc\Model
     protected $created_at;
 
     /**
+     *
+     * @var string
+     */
+    protected $status;
+
+    /**
      * Method to set the value of field id
      *
      * @param integer $id
@@ -177,6 +183,19 @@ class Suggestion extends \Phalcon\Mvc\Model
     }
 
     /**
+     * Method to set the value of field status
+     *
+     * @param string $status
+     * @return $this
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
      * Returns the value of field id
      *
      * @return integer
@@ -266,6 +285,16 @@ class Suggestion extends \Phalcon\Mvc\Model
         return $this->created_at;
     }
 
+    /**
+     * Returns the value of field status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
     public function getSource()
     {
         return 'suggestion';
@@ -285,7 +314,8 @@ class Suggestion extends \Phalcon\Mvc\Model
             'content' => 'content', 
             'page_url' => 'page_url', 
             'agent' => 'agent', 
-            'created_at' => 'created_at'
+            'created_at' => 'created_at', 
+            'status' => 'status'
         );
     }
 

@@ -14,6 +14,7 @@ CREATE TABLE `suggestion` (
   `page_url` VARCHAR(255),
   `agent` VARCHAR(255),
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `status` ENUM('pending', 'accepted', 'rejected', 'done') DEFAULT 'pending',
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 

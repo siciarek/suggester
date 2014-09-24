@@ -22,7 +22,7 @@ class DefaultController extends CommonController {
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.created_at DESC');
 
-        if ($format !== 'html') {
+        if (in_array($format, ['xls', 'xlsx'])) {
 
             return $this->getExcelResponse($format, $data);
 
@@ -68,24 +68,23 @@ class DefaultController extends CommonController {
          * @var \Phalcon\Translate\Adapter\NativeArray $trans
          */
         $trans = $this->getDI()->getTrans();
+        $tmpfname = tempnam($this->getDI()->getConfig()->dirs->temp, 'XLS');
         $fname = sprintf('%s.%s', 'suggestions', $format);
-        $tmpdir = $this->getDI()->getConfig()->dirs->temp;
-        $tmpfname = tempnam($tmpdir, 'XLS');
+        $title = preg_replace('/\*+$/', '', $trans->query('suggestion.list'));
 
         $params = $this->view->getParamsToView();
         $creator = sprintf('%s %s', $params['app_name'], $params['app_version']);
 
-        $source = $data->getQuery()->execute()->toArray();
-
-        $title = $trans->query('suggestion.list');
-        $title = preg_replace('/\*+$/', '', $title);
-
         $xls = new \PHPExcel();
+
         $sheet = $xls
             ->getActiveSheet()
             ->setTitle($title);
 
+        $source = $data->getQuery()->execute()->toArray();
+
         if (count($source) > 0) {
+
             $headers = array_map(function ($e) use ($trans) {
                 return $trans->query('suggestion.' . $e);
             }, array_keys($source[0]));
@@ -94,13 +93,14 @@ class DefaultController extends CommonController {
 
             $sheet
                 ->setSelectedCellByColumnAndRow(0, 1)
-                ->fromArray(
-                    $source
-                );
+                ->fromArray($source);
 
             $cellIterator = $sheet->getRowIterator()->current()->getCellIterator();
             $cellIterator->setIterateOnlyExistingCells(true);
-            /** @var \PHPExcel_Cell $cell */
+
+            /**
+             * @var \PHPExcel_Cell $cell
+             */
             foreach ($cellIterator as $cell) {
                 $sheet->getColumnDimension($cell->getColumn())->setAutoSize(true);
             }
@@ -109,16 +109,32 @@ class DefaultController extends CommonController {
             $sheet->setAutoFilterByColumnAndRow(0, 1, count($headers) - 1, $sheet->getHighestDataRow());
         }
 
-        \PHPExcel_IOFactory::createWriter($xls, $format === 'xls' ? 'Excel5' : 'Excel2007')
-            ->save($tmpfname);
+        // TODO: fix adding properties, does not work for OpenOffice
+        $xls->getProperties()
+            ->setCustomProperty('version', 1)
+            ->setCreator($creator)
+            ->setLastModifiedBy('Maarten Balliauw')
+            ->setTitle('Office 2005 XLS Test Document')
+            ->setSubject('Office 2005 XLS Test Document')
+            ->setDescription('Test document for Office 2005 XLS, generated using PHP classes.')
+            ->setKeywords('office 2005 openxml php')
+            ->setCategory('Test result file')
+        ;
 
+        $writer = \PHPExcel_IOFactory::createWriter($xls, $format === 'xls' ? 'Excel5' : 'Excel2007');
+        $writer->save($tmpfname);
+
+        // Get file content:
+        $content = file_get_contents($tmpfname);
+
+        // Make tidy:
+        unlink($tmpfname);
 
         $contentType = $format === 'xls' ? 'application/vnd.ms-excel' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-        $content = file_get_contents($tmpfname);
 
         $headers = array(
             'Content-length' => filesize($tmpfname),
-            'Content-Disposition' => 'attachment;filename="' . $fname . '"',
+            'Content-Disposition' => sprintf('attachment;filename="%s"', $fname),
             'Cache-Control' => 'max-age=0',
             'Pragma' => 'public',
         );
