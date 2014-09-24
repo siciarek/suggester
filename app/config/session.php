@@ -15,7 +15,7 @@ $di->setShared('session', function () use ($di) {
 
     $session = new Phalcon\Session\Adapter\Files();
 
-    if($di->getConfig()->session->type === 'database') {
+    if($di->getConfig()->session->type === 'database' and $di->getConfig()->database->adapter === 'mysql') {
         $session = new Phalcon\Session\Adapter\Database(array(
             'db' => $di->getDb(),
             'table' => $di->getConfig()->session->table,

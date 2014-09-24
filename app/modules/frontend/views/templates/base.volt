@@ -16,6 +16,11 @@
         <link href="/themes/bootstrap/css/bootstrap-adjustments.css" rel="stylesheet"/>
         <link href="/themes/bootstrap/css/font-awesome.min.css" rel="stylesheet"/>
         <style>
+            .user-label {
+                margin-top: 8px;
+                font-weight: bold;
+            }
+
             ul.i18n {
                 margin: 0;
                 padding: 0;
@@ -68,10 +73,32 @@
         <li><i class="fa fa-globe fa-fw fa-lg text-primary"></i></li>
         {% for l in ['pl', 'en'] %}
             <li>
-                <a class="{% if l == this.di.getLocale() %}active{% endif %}" href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l }}</a>
+                <a class="{% if l == this.di.getLocale() %}active{% endif %}"
+                   href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l }}</a>
             </li>
         {% endfor %}
     </ul>
+    <div class="user-label text-muted pull-right">
+        {% if user.isAuthenticated() %}
+            <i class="fa fa-user fa-fw fa-lg"></i>
+            {{ user.get('firstName') }} {{ user.get('lastName') }} &lt;{{ user.get('email') }}&gt;
+
+            <a class="text-danger" title="{{ 'user.sign_out'|trans }}" href="{{ url({'for':'user.sign_out'}) }}">
+               <span class="fa-stack">
+                  <i class="fa fa-square fa-stack-2x"></i>
+                  <i class="fa fa-power-off fa-stack-1x fa-inverse"></i>
+                </span>
+            </a>
+        {% else %}
+            <a class="text-warning" title="{{ 'user.sign_in'|trans }}" href="{{ url({'for':'user.sign_in'}) }}">
+               <span class="fa-stack">
+                  <i class="fa fa-square fa-stack-2x"></i>
+                  <i class="fa fa-power-off fa-stack-1x fa-inverse"></i>
+                </span>
+            </a>
+        {% endif %}
+    </div>
+
     {% block content %}{% endblock %}
 </div>
 

@@ -64,7 +64,6 @@
     </script>
 {% endblock %}
 
-
 {% block stylesheets %}
     {{ super() }}
     <style>

@@ -3,6 +3,11 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'user.sign_out' => 'Wyloguj się',
+  'error.invalid_access_data' => 'Niewłaściwe dane dostępowe.',
+  'user.sign_in' => 'Zaloguj się',
+  'user.password' => 'Hasło',
+  'user.username' => 'Nazwa użytkownika',
   'common.search' => 'Wpisz szukaną frazę…',
   'status is required' => 'Status jest wymagany.',
   'suggestion.status' => 'Status',

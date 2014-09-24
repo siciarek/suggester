@@ -7,7 +7,7 @@ div.input-group {
 }
 
 label.input-group-addon {
-    min-width: 120px;
+    min-width: 150px;
     text-align: right;
     vertical-align: top;
     padding-top: 9px;

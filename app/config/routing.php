@@ -20,6 +20,8 @@ $di->setShared('router', function () use ($di) {
         ),
         'frontend' => array(
             'Application\Frontend\Controller\Default',
+            'Application\Frontend\Controller\User',
+            'Application\Frontend\Controller\Test',
         ),
     );
 

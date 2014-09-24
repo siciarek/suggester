@@ -13,6 +13,7 @@ class DefaultController extends CommonController {
 
     /**
      * @Get("/", name="frontend.list")
+     * @Get("/", name="home")
      * @Get("/suggestions.{format:html|xls|xlsx}}", name="frontend.list_export")
      */
     public function listAction($format = 'html') {

@@ -7,7 +7,7 @@
             $('table.suggestions-table').on('click', '.btn.delete', function (e) {
                 e.preventDefault();
                 var self = $(this);
-                if(confirm('{{ 'suggestion.removal_confirmation'|trans }}')) {
+                if (confirm('{{ 'suggestion.removal_confirmation'|trans }}')) {
                     $('div.wait').removeClass('hidden');
                     location.href = self.attr('href');
                 }
@@ -27,7 +27,8 @@
 
         </div>
         <div class="col-md-6">
-            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}" class="btn btn-default btn-lg pull-right{% if items.count() == 0 %} disabled{% endif %}">
+            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}"
+               class="btn btn-default btn-lg pull-right{% if items.count() == 0 %} disabled{% endif %}">
                 <i class="fa fa-table fa-lg fa=fw text-muted"></i>&nbsp;
                 {{ 'common.download_excel'|trans }}
             </a>
@@ -74,9 +75,14 @@
                     <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>
                     <td class="nowrap">{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
                     <td>
-                        <a href="{{ url({'for': 'frontend.remove', 'id': i.getId() }) }}" title="{{ 'common.remove'|trans }}" class="btn btn-danger btn-xs delete">
-                            <i class="fa fa-times-circle fa-fw"></i>
-                        </a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ url({'for': 'frontend.remove', 'id': i.getId() }) }}"
+                               title="{{ 'common.remove'|trans }}" class="btn btn-danger btn-xs delete">
+                                <i class="fa fa-times-circle fa-fw"></i>
+                            </a>
+                        {% else %}
+                            &nbsp;
+                        {% endif %}
                     </td>
                 </tr>
             {% endfor %}

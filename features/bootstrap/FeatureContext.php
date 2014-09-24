@@ -22,6 +22,7 @@ use Application\Frontend\Entity\Suggestion;
 class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements SnippetAcceptingContext {
 
     protected static $clean = false;
+    protected $di;
 
     /**
      * Initializes context.
@@ -30,10 +31,19 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
      * You can also pass arbitrary arguments to the context constructor through behat.yml.
      */
     public function __construct() {
-
+        $this->di = \Phalcon\Di::getDefault();
     }
 
 
+    /**
+     * @Given że aplikacja jest w środowisku produkcyjnym
+     */
+    public function zeAplikacjaJestWSrodowiskuProdukcyjnym()
+    {
+        if($this->di->getConfig()->application->env !== 'prod') {
+            throw new \Exception('Apllication is not in "prod" environment.');
+        }
+    }
 
     /**
      * @Given że w systemie nie ma testowych danych

@@ -40,7 +40,7 @@ class Volt extends \Phalcon\Mvc\View\Engine\Volt
         });
 
         $compiler->addFunction('is_granted', function($args) {
-            return '$this->di->getAccess()->isGranted(' . $args . ')';
+            return '$this->di->getUser()->isGranted(' . $args . ')';
         });
 
         $compiler->addFunction('render', function($args) {
@@ -105,6 +105,7 @@ $di->set('view', function () use ($di) {
     $view->setVar('app_version', $di->getConfig()->application->version);
     $view->setVar('app_short_name', $di->getConfig()->application->short_name);
     $view->setVar('app_description', $di->getConfig()->application->description);
+    $view->setVar('user', $di->getSession()->get('user'));
 
     return $view;
 });

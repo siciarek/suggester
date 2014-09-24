@@ -10,16 +10,14 @@ namespace Application\Common\Plugin;
 
 use Phalcon\Exception;
 
-class SecurePlugin extends \Phalcon\Mvc\User\Plugin
-{
+class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
     const ANNOTATION_NAME = 'Secure';
     const NOT_SECURED = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
      * To zdarzenie jest wywoływane przed wykonaniem każdego routingu w dispatcherze
      */
-    public function beforeExecuteRoute(\Phalcon\Events\Event $event, \Phalcon\Mvc\Dispatcher $dispatcher)
-    {
+    public function beforeExecuteRoute(\Phalcon\Events\Event $event, \Phalcon\Mvc\Dispatcher $dispatcher) {
         $controller = get_class($dispatcher->getActiveController());
         $action = $dispatcher->getActiveMethod();
 
@@ -56,13 +54,25 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin
             }
         }
 
-        // TODO: implement access
-        $access = true;
+        $access = false;
 
-        // If user is logged in and tries to access forbiden page:
+        foreach ($required as $role) {
+            if ($this->getDI()->getUser()->isGranted($role)) {
+                $access = true;
+                break;
+            }
+        }
+
         if ($access === false) {
-            if ($controller != '\Application\Common\Controller\Error') {
+            // If user is logged in and tries to access forbiden page:
+            if ($this->getDI()->getUser()->isAuthenticated() and $controller !== '\Application\Common\Controller\Error') {
                 return $dispatcher->getActiveController()->response->redirect(['for' => 'error.access_forbiden']);
+            } else {
+                $route = $dispatcher->getActiveController()->router->getMatchedRoute()->getName();
+                $params = $dispatcher->getActiveController()->router->getParams();
+
+                $this->getDI()->getSession()->set('$TARGET$', (['for' => $route ] + $params));
+                return $dispatcher->getActiveController()->response->redirect(['for' => 'user.sign_in']);
             }
         }
 

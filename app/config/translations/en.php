@@ -3,6 +3,11 @@
 // app/config/translations/en.php
 
 $messages = array (
+  'user.sign_out' => 'Sign out*',
+  'error.invalid_access_data' => 'Invalid access data',
+  'user.sign_in' => 'Sign in',
+  'user.password' => 'Password',
+  'user.username' => 'Username',
   'common.search' => 'Search…',
   'status is required' => 'Status is required.',
   'suggestion.status' => 'Status',

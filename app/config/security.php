@@ -11,10 +11,7 @@ $di->set('security', function () use ($di) {
 }, true);
 
 $di->set('user', function() use ($di) {
-    $user = new \Application\Backend\Entity\User();
-
-    $user->setFirstName('Jacek');
-    $user->setLastName('Siciarek');
+    $user = new \Application\Common\User();
 
     return $user;
 });
