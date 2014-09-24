@@ -64,7 +64,7 @@ Open ``behat.yml.dist`` and copy commented lines
     #
     #    extensions:
     #        Behat\MinkExtension\ServiceContainer\MinkExtension:
-    #            base_url:  http://ino.dev
+    #            base_url:  http://suggester.dev
     #            files_path: features/attachments
     #            default_session: goutte
     #            javascript_session: selenium2
@@ -86,7 +86,7 @@ into file ``behat.yml`` than uncoment them
 
         extensions:
             Behat\MinkExtension\ServiceContainer\MinkExtension:
-                base_url:  http://ino.dev
+                base_url:  http://suggester.dev
                 files_path: features/attachments
                 default_session: goutte
                 javascript_session: selenium2
