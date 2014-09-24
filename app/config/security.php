@@ -18,3 +18,10 @@ $di->set('user', function() use ($di) {
 
     return $user;
 });
+
+$di->set('roles', function() use ($di) {
+    $input = file_get_contents($di->getConfig()->dirs->config . DIRECTORY_SEPARATOR . 'security.yml');
+    $roles = \Symfony\Component\Yaml\Yaml::parse($input)['security']['role_hierarchy'];
+
+    return $roles;
+});

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project>
+
+<project name="suggester" default="cc" basedir=".">
+
+    <loadproperties srcFile="properties.cnf"/>
+
+    <property name="doc.source.dir" value="doc"/>
+    <property name="doc.html.target.dir" value="public/doc"/>
+    <property name="doc.pdf.target.dir" value="public/doc/pdf"/>
+
+    <target name="doc" depends="doc-html, doc-pdf" description="Generowanie dokumentacji projektu"/>
+
+    <target name="doc-html" description="Generowanie dokumentacji projektu w formacie HTML">
+        <exec executable="sphinx-build">
+            <arg line="-a -b html ${doc.source.dir} ${doc.html.target.dir}"/>
+        </exec>
+    </target>
+
+    <target name="doc-pdf" description="Generowanie dokumentacji projektu w formacie PDF">
+        <exec executable="sphinx-build">
+            <arg line="-a -b latex ${doc.source.dir} ${doc.pdf.target.dir}"/>
+        </exec>
+        <exec executable="make" dir="${doc.pdf.target.dir}"/>
+        <delete verbose="true" includeemptydirs="true">
+            <fileset dir="${doc.pdf.target.dir}" excludes="${ant.project.name}.pdf" includes="**/*"/>
+        </delete>
+        <move file="${doc.pdf.target.dir}/${ant.project.name}.pdf" todir="${doc.html.target.dir}"/>
+        <delete includeEmptyDirs="true">
+            <fileset dir="${doc.pdf.target.dir}"/>
+        </delete>
+    </target>
+
+    <target name="ccx" depends="cc" description="Czyszczenie katalogu cache (alias)"/>
+
+    <target name="cc" description="Czyszczenie katalogu cache">
+        <delete includeemptydirs="true" verbose="true" >
+            <fileset dir="app/cache" includes="**/*"/>
+        </delete>
+    </target>
+
+    <target name="db" description="Reset bazy danych">
+        <exec executable="${php}">
+            <arg line="app/console db"/>
+        </exec>
+    </target>
+
+</project>

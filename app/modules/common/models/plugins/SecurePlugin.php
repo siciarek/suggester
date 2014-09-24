@@ -1,19 +1,59 @@
 <?php
 /**
- * Created by JetBrains PhpStorm.
- * User: siciarek
+ * Created by PhpStorm.
+ * User: Jacek
  * Date: 23.09.14
- * Time: 08:05
- * To change this template use File | Settings | File Templates.
+ * Time: 08:25
  */
 
 namespace Application\Common\Plugin;
 
+class SecurePlugin extends \Phalcon\Mvc\User\Plugin
+{
+    const ANNOTATION_NAME = 'Secure';
+    const NOT_SECURED = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
-class SecurePlugin {
+    /**
+     * To zdarzenie jest wywoływane przed wykonaniem każdego routingu w dispatcherze
+     */
+    public function beforeExecuteRoute(\Phalcon\Events\Event $event, \Phalcon\Mvc\Dispatcher $dispatcher)
+    {
+        $controller = get_class($dispatcher->getActiveController());
+        $action = $dispatcher->getActiveMethod();
 
+        // Wyłuskaj adnotacje przypisane do bieżącego kontrolera:
+        $annotations['controller'] = $this->annotations->get($controller)->getClassAnnotations();
 
-    public function __construct() {
+        // Wyłuskaj adnotacje przypisane do bieżącej akcji:
+        $annotations['action'] = $this->annotations->getMethod($controller, $action);
 
+        $roles = [];
+
+        /**
+         * @var \Phalcon\Annotations\Collection $collection
+         */
+        foreach ($annotations as $key => $collection) {
+            if ($collection instanceof \Phalcon\Annotations\Collection and $collection->has(self::ANNOTATION_NAME)) {
+                $roles[$key] = $collection->get(self::ANNOTATION_NAME)->getArguments();
+            }
+        }
+
+        // Jeżeli nie ma żadnych zabezpieczeń lub akcja nie jest zabezpieczona:
+        if (count($roles) === 0 or (array_key_exists('action', $roles) and in_array(self::NOT_SECURED, $roles['action']))) {
+            return true;
+        }
+
+        $required = [];
+
+        // Tworzenie listy wymaganych ról dla danej akcji - adnotacje akcji mają wyższy priorytet niż adnotacje kontrolera:
+        if (array_key_exists('action', $roles)) {
+            $required = $roles['action'];
+        } else {
+            if (false == in_array(self::NOT_SECURED, $roles['controller'])) {
+                $required = $roles['controller'];
+            }
+        }
+
+        return true;
     }
 }
