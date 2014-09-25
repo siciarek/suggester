@@ -57,7 +57,7 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
         $access = false;
 
         foreach ($required as $role) {
-            if ($this->getDI()->getUser()->isGranted($role)) {
+            if ($this-> getDI()->getUser()->isGranted($role)) {
                 $access = true;
                 break;
             }

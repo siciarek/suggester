@@ -12,7 +12,8 @@ namespace Application\Common;
 
 use Application\Common\Plugin\SecurePlugin;
 
-class User implements \Phalcon\DI\InjectionAwareInterface {
+class User implements \Phalcon\DI\InjectionAwareInterface
+{
 
     /**
      * @var \Phalcon\DiInterface
@@ -21,34 +22,61 @@ class User implements \Phalcon\DI\InjectionAwareInterface {
 
     protected $user;
 
-    protected function checkAccess($access) {
+    private $expanded = [];
+
+    protected function checkAccess($access)
+    {
 
         $this->user = \Application\Frontend\Entity\User::findFirstByUsername($access->username);
 
         return $this->user instanceof \Application\Frontend\Entity\User
-            and $this->getDi()->getSecurity()->checkHash($access->password, $this->user->getPassword());
+        and $this->getDi()->getSecurity()->checkHash($access->password, $this->user->getPassword());
     }
 
-    public function isGranted($role) {
-        if($this->isAuthenticated()) {
+    public function expandRole($role)
+    {
+        $roles = $this->getDi()->getRoles();
+
+        if (array_key_exists($role, $roles)) {
+            if (is_array($roles[$role])) {
+                foreach ($roles[$role] as $r) {
+                    $this->expandRole($r, $this->expanded);
+                }
+            } else {
+                if ($roles[$role] !== null) {
+                    $this->expanded[] = $roles[$role];
+                }
+            }
+            $this->expanded[] = $role;
+        }
+
+        return array_unique($this->expanded, SORT_STRING);
+    }
+
+    public function isGranted($role)
+    {
+        if ($this->isAuthenticated()) {
             return in_array($role, $this->get('roles'));
         }
 
         return $role === SecurePlugin::NOT_SECURED;
     }
 
-    public function get($key) {
+    public function get($key)
+    {
         if ($this->isAuthenticated()) {
             return $this->getDI()->getSession()->get('user')[$key];
         }
         return null;
     }
 
-    public function logout() {
+    public function logout()
+    {
         $this->getDI()->getSession()->destroy();
     }
 
-    public function authenticate($access) {
+    public function authenticate($access)
+    {
 
         if ($this->checkAccess($access)) {
             $u = new \Phalcon\Session\Bag('user');
@@ -67,7 +95,8 @@ class User implements \Phalcon\DI\InjectionAwareInterface {
         return false;
     }
 
-    public function isAuthenticated() {
+    public function isAuthenticated()
+    {
         return $this->getDI()->getSession()->has('user');
     }
 
@@ -76,7 +105,8 @@ class User implements \Phalcon\DI\InjectionAwareInterface {
      *
      * @param \Phalcon\DiInterface $dependencyInjector
      */
-    public function setDI($dependencyInjector) {
+    public function setDI($dependencyInjector)
+    {
         $this->di = $dependencyInjector;
     }
 
@@ -85,7 +115,8 @@ class User implements \Phalcon\DI\InjectionAwareInterface {
      *
      * @return \Phalcon\DiInterface
      */
-    public function getDI() {
+    public function getDI()
+    {
         return $this->di;
     }
 }

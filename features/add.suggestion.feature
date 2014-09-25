@@ -1,7 +1,7 @@
 # language: pl
 
 @form @suggestion
-Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
+Potrzeba biznesowa: Możliwość dodawania sugestii i opinii przez użytkowników
   Aby ulepszać i poprawiać funkcjonalność aplikacji
   As a Użytkownik
   Chciałbym mieć możliwość rejestrowania swoich uwag na temat aplikacji
@@ -21,7 +21,7 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
     I nacisnę przycisk "Zapisz"
     Wtedy powinienem być na stronie "/prompt"
     I kod statusu odpowiedzi powinien być równy 200
-    I kod statusu odpowiedzi nie powinien być równy 404
+    Ale kod statusu odpowiedzi nie powinien być równy 404
     Jeżeli odwiedzę stronę "/"
     Wtedy zobaczę tekst "Lista sugestii (1)"
     I zobaczę tekst "Sugestia dodana z domyślnymi ustawieniami formularza."
@@ -37,7 +37,7 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
     I nacisnę przycisk "Zapisz"
     Wtedy powinienem być na stronie "/prompt"
     I kod statusu odpowiedzi powinien być równy 200
-    I kod statusu odpowiedzi nie powinien być równy 404
+    Ale kod statusu odpowiedzi nie powinien być równy 404
     Jeżeli odwiedzę stronę "/"
     Wtedy zobaczę tekst "Lista sugestii (<liczba>)"
     I zobaczę tekst "<sugestia>"

@@ -22,6 +22,8 @@ $loader->registerNamespaces(
         'Application\Common\Controller' => $di->getConfig()->dirs->modules . '/common/controllers/',
         'Application\Common\Plugin' => $di->getConfig()->dirs->modules . '/common/models/plugins/',
         'Application\Common' => $di->getConfig()->dirs->modules . '/common/models',
+
+        'Application\Test' => $di->getConfig()->dirs->tests,
     )
 );
 
