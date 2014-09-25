@@ -121,11 +121,12 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
         if ($scope->getTestResult()->getResultCode() === Behat\Testwork\Tester\Result\TestResult::FAILED) {
             $driver = $this->getSession()->getDriver();
             if ($driver instanceof Behat\Mink\Driver\Selenium2Driver) {
+                $browser = $this->getMinkParameters()['browser_name'];
                 $feature = iconv('UTF-8', 'ASCII//TRANSLIT', $scope->getFeature()->getTitle());
                 $line = $scope->getStep()->getLine();
                 $description = iconv('UTF-8', 'ASCII//TRANSLIT', $scope->getStep()->getText());
                 $description = preg_replace('/[^\s\w]/', '', $description);
-                $image = sprintf('%s.%s.%s.png', $feature, $line, $description);
+                $image = sprintf('%s.%s.%s.%s.png', $browser, $feature, $line, $description);
                 file_put_contents('temp/BEHAT.' . $image, $driver->getScreenshot());
             }
         }
