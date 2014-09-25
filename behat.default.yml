@@ -11,6 +11,7 @@ default:
 
     extensions:
        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            files_path: features/attachments
             goutte: ~
             selenium2: ~
 hl:
