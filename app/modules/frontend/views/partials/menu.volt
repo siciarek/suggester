@@ -1,33 +1,34 @@
-{% set menu = [
-{ 'href':'#intro', 'text': 'menu.intro', 'icon': 'fa-home' },
-{ 'href':'#textcontent', 'text': 'menu.info', 'icon': 'fa-info-circle' },
-{ 'href':'#grid', 'text': 'menu.music_records', 'icon': 'fa-volume-up' },
-{ 'href':'#carousel', 'text': 'menu.video', 'icon': 'fa-film' },
-{ 'href':'#gallery', 'text': 'menu.photos', 'icon': 'fa-camera-retro' },
-{ 'href':'#contact', 'text': 'menu.contact', 'icon': 'fa-envelope-o' }
-] %}
+<div class="navbar navbar-default navbar-static-top">
+    <div class="container">
 
-<section id="menu">
-    <div class="pagelogo">
-        <div class="special-element center hidden-xs"><span></span></div>
-        <a href="#intro" class="scroll"><strong>{{ app_short_name }}</strong></a>
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{{ url({'for':'home'}) }}">
+                <i class="fa fa-bullhorn fa-fw fa-lg"></i>
+                {{ app_name }} {{ app_version }}
+            </a>
+        </div>
+
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    {% if user.isAuthenticated() %}
+                        <a title="{{ 'user.sign_out'|trans }}" href="{{ url({'for':'user.sign_out'}) }}">
+                            <i class="fa fa-unlock-alt fa-fw fa-lg"></i>
+                            {{ 'user.sign_out'|trans }}
+                        </a>
+                    {% else %}
+                        <a title="{{ 'user.sign_in'|trans }}" href="{{ url({'for':'user.sign_in'}) }}">
+                            <i class="fa fa-unlock-alt fa-fw fa-lg"></i>
+                            {{ 'user.sign_in'|trans }}
+                        </a>
+                    {% endif %}
+                </li>
+            </ul>
+        </div>
     </div>
-    <div class="menuswitch">
-        <a href="#" id="menuswitcher">
-            <span class="fa fa-bars"></span>
-        </a>
-    </div>
-    <div class="navigation">
-        <ul class="nav">
-            {% for i in menu %}
-            <li><a href="{{ i['href'] }}" class="scroll"><span class="fa {{ i['icon'] }}"></span> {{ i['text']|trans }}</a></li>
-            {% endfor %}
-            {#<li><a href="#intro" class="scroll"><span class="fa fa-home"></span> {{ 'menu.info'|trans }}</a></li>#}
-            {#<li><a href="#info" class="scroll"><span class="fa fa-info-circle"></span> Text</a></li>#}
-            {#<li><a href="#grid" class="scroll"><span class="fa fa-th"></span> Grid</a></li>#}
-            {#<li><a href="#carousel" class="scroll"><span class="fa fa-arrows-h"></span> Carousel</a></li>#}
-            {#<li><a href="#gallery" class="scroll"><span class="fa fa-image"></span> Gallery</a></li>#}
-            {#<li><a href="#contact" class="scroll"><span class="fa fa-envelope-o"></span> Contact</a></li>#}
-        </ul>
-    </div>
-</section>
+</div>
