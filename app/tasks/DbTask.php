@@ -44,6 +44,7 @@ class DbTask extends \Phalcon\CLI\Task
                 $db = new SQLite3($dbfile);
                 chmod($dbfile, 0664);
 
+                $db->createFunction('MD5', 'md5');
                 $db->exec($this->sql);
                 break;
 
