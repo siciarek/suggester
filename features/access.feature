@@ -11,7 +11,6 @@ Potrzeba biznesowa: Zapewnienie dostępu do odpowiednich elementów aplikacji up
     I że odwiedzę stronę "/sign-out"
     Oraz odwiedzę stronę "/locale/pl"
 
-
   Scenariusz: Próba otwarcia nieistniejącej strony
     Zakładając że odwiedzę stronę "/not/existing/page"
     Wtedy powinienem być na stronie "/not/existing/page"

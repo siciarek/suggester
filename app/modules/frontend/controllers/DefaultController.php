@@ -20,7 +20,7 @@ class DefaultController extends CommonController {
 
         $data = $this->modelsManager->createBuilder()
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
-            ->orderBy('s.created_at DESC');
+            ->orderBy('s.id DESC');
 
         if (in_array($format, ['xls', 'xlsx'])) {
 

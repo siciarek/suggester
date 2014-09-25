@@ -11,11 +11,10 @@ Potrzeba biznesowa: Zapewnienie dostępności aplikacji
     Wtedy powinienem być na stronie "/"
     I zobaczę tekst "Lista sugestii"
     I kod statusu odpowiedzi powinien być równy 200
-    I kod statusu odpowiedzi nie powinien być równy 404
+    Ale kod statusu odpowiedzi nie powinien być równy 404
 
   Scenariusz: Sprawdzenie czy działa strona formularza
     Jeżeli odwiedzę stronę "/form"
     Wtedy powinienem być na stronie "/form"
     I kod statusu odpowiedzi powinien być równy 200
-    I kod statusu odpowiedzi nie powinien być równy 404
-
+    Ale kod statusu odpowiedzi nie powinien być równy 404
