@@ -1,7 +1,4 @@
-
-
 default:
-
     formatters:
         pretty: false
         progress: true
@@ -16,3 +13,27 @@ default:
        Behat\MinkExtension\ServiceContainer\MinkExtension:
             goutte: ~
             selenium2: ~
+hl:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: goutte
+ff:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: selenium2
+            browser_name: firefox
+cr:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: selenium2
+            browser_name: chrome
+sf:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: selenium2
+            browser_name: safari
+op:
+    extensions:
+        Behat\MinkExtension\ServiceContainer\MinkExtension:
+            default_session: selenium2
+            browser_name: opera
