@@ -6,9 +6,10 @@ Potrzeba biznesowa: Zapewnienie dostępności aplikacji
   As a Użytkownik
   Chciałbym mieć pewność, że aplikacja jest dostępna
 
-  Scenariusz: Powtórne sprawdzenie czy działa strona listy
+  Scenariusz: Sprawdzenie czy działa strona listy
     Jeżeli odwiedzę stronę "/"
     Wtedy powinienem być na stronie "/"
+    I zobaczę tekst "Lista sugestii"
     I kod statusu odpowiedzi powinien być równy 200
     I kod statusu odpowiedzi nie powinien być równy 404
 

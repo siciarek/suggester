@@ -6,8 +6,9 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
   As a Użytkownik
   Chciałbym mieć możliwość rejestrowania swoich uwag na temat aplikacji
 
-  Założenia:
+  Założenia: W systemie nie ma danych testowych a strona jest w języku polskim
     Zakładając że w systemie nie ma testowych danych
+    I odwiedzę stronę "/locale/pl"
     I odwiedzę stronę "/"
     I zobaczę tekst "Lista sugestii (0)"
     I zobaczę tekst "Lista jest pusta."
