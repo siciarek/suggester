@@ -1,6 +1,6 @@
 # language: pl
 
-@form
+@form @suggestion
 Potrzeba biznesowa: Możliwość dodawania sugestii i opinii
   Aby ulepszać i poprawiać funkcjonalność aplikacji
   As a Użytkownik
