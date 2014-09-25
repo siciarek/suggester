@@ -11,8 +11,6 @@ $application = new \Phalcon\CLI\Console();
 
 require_once APPLICATION_PATH . '/autoload.php';
 
-$application->setDI($di);
-
 $di->setShared('console', $application);
 
 /**

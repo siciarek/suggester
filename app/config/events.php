@@ -2,45 +2,48 @@
 
 use \Phalcon\Mvc\Dispatcher;
 
-$di->set('dispatcher', function () use ($di) {
+if (!$di instanceof \Phalcon\DI\FactoryDefault\CLI) {
 
-        $eventsManager = $di->getShared('eventsManager');
+    $di->set('dispatcher', function () use ($di) {
 
-        $eventsManager
-            ->attach('dispatch:beforeExecuteRoute', new \Application\Common\Plugin\SecurePlugin());
+            $eventsManager = $di->getShared('eventsManager');
 
-        $eventsManager
-            ->attach(
-                'dispatch:beforeException',
-                function ($event, \Phalcon\Mvc\Dispatcher $dispatcher, \Exception $exception) {
+            $eventsManager
+                ->attach('dispatch:beforeExecuteRoute', new \Application\Common\Plugin\SecurePlugin());
 
-                    switch ($exception->getCode()) {
-                        case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
-                        case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
-                            $dispatcher->forward(
-                                array(
-                                    'controller' => 'Application\Common\Controller\Error',
-                                    'action' => 'notFound',
-                                )
-                            );
-                            return false;
-                            break;
-                        default:
-                            $dispatcher->forward(
-                                array(
-                                    'controller' => 'Application\Common\Controller\Error',
-                                    'action' => 'uncaughtException',
-                                )
-                            );
-                            return true;
-                            break;
+            $eventsManager
+                ->attach(
+                    'dispatch:beforeException',
+                    function ($event, \Phalcon\Mvc\Dispatcher $dispatcher, \Exception $exception) {
+
+                        switch ($exception->getCode()) {
+                            case Dispatcher::EXCEPTION_HANDLER_NOT_FOUND:
+                            case Dispatcher::EXCEPTION_ACTION_NOT_FOUND:
+                                $dispatcher->forward(
+                                    array(
+                                        'controller' => 'Application\Common\Controller\Error',
+                                        'action' => 'notFound',
+                                    )
+                                );
+                                return false;
+                                break;
+                            default:
+                                $dispatcher->forward(
+                                    array(
+                                        'controller' => 'Application\Common\Controller\Error',
+                                        'action' => 'uncaughtException',
+                                    )
+                                );
+                                return true;
+                                break;
+                        }
                     }
-                }
-            );
+                );
 
-        $dispatcher = new Dispatcher();
-        $dispatcher->setEventsManager($eventsManager);
-        return $dispatcher;
-    },
-    true
-);
+            $dispatcher = new Dispatcher();
+            $dispatcher->setEventsManager($eventsManager);
+            return $dispatcher;
+        },
+        true
+    );
+}
