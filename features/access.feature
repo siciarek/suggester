@@ -6,10 +6,11 @@ Potrzeba biznesowa: Zapewnienie dostępu do odpowiednich elementów aplikacji up
   As a Twórca aplikacji
   Chciałbym mieć pewność, że tylko uprawnieni użytkownicy mają do nich dostęp
 
-  Założenia: Użytkownik powinien być wylogowany a strona powinna być w języku polskim
+  Założenia: Użytkownik powinien być wylogowany a strona powinna być w języku polskim i w trybie produkcyjnym
     Zakładając że aplikacja jest w środowisku produkcyjnym
     I że odwiedzę stronę "/sign-out"
     Oraz odwiedzę stronę "/locale/pl"
+
 
   Scenariusz: Próba otwarcia nieistniejącej strony
     Zakładając że odwiedzę stronę "/not/existing/page"

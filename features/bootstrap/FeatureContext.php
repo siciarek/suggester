@@ -40,6 +40,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
      */
     public function zeAplikacjaJestWSrodowiskuProdukcyjnym()
     {
+//        $this->assertSession()->elementNotExists('css', 'div.pdw-wrap');
+//        $this->assertElementNotOnPage('div.pdw-wrap');
         if($this->di->getConfig()->application->env !== 'prod') {
             throw new \Exception('Apllication is not in "prod" environment.');
         }

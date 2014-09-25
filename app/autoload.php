@@ -15,6 +15,7 @@ $includes = array(
     '/config/view.php',
     '/config/security.php',
     '/config/access.php',
+    '/config/logger.php',
 );
 
 foreach($includes as $e) {
