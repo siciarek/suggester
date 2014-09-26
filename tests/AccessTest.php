@@ -49,12 +49,17 @@ class AccessTest extends \Application\Test\UnitTestCase
     public static function expandRoleDataProvider()
     {
         return [
+            [null, []],
+            ['', []],
+            ['                 ', []],
+            ['NONEXISTING_ROLE', []],
             ['IS_AUTHENTICATED_ANONYMOUSLY', ['IS_AUTHENTICATED_ANONYMOUSLY']],
             ['ROLE_USER', ['ROLE_USER', 'IS_AUTHENTICATED_ANONYMOUSLY']],
             ['ROLE_ADMIN', ['ROLE_ADMIN', 'ROLE_USER', 'IS_AUTHENTICATED_ANONYMOUSLY']],
+            ['ROLE_SUPER_ADMIN', ['IS_AUTHENTICATED_ANONYMOUSLY','ROLE_USER','ROLE_ADMIN','ROLE_ALLOWED_TO_SWITCH','ROLE_SUPER_ADMIN']],
+
             ['ROLE_ALLOWED_TO_READ_OWN_ARTICLE', ['IS_AUTHENTICATED_ANONYMOUSLY','ROLE_USER','ROLE_ALLOWED_TO_READ_OWN_ARTICLE']],
             ['ROLE_ALLOWED_TO_READ_ARTICLE', ['IS_AUTHENTICATED_ANONYMOUSLY','ROLE_USER','ROLE_ALLOWED_TO_READ_OWN_ARTICLE','ROLE_ALLOWED_TO_READ_ARTICLE']],
-            ['NONEXISTING_ROLE', []],
         ];
     }
 

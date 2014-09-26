@@ -10,15 +10,30 @@ $di->set('security', function () use ($di) {
     return $security;
 }, true);
 
-$di->set('user', function() use ($di) {
+$di->set('user', function () use ($di) {
     $user = new \Application\Common\User();
 
     return $user;
 });
 
-$di->set('roles', function() use ($di) {
+$di->set('roles', function () use ($di) {
     $input = file_get_contents($di->getConfig()->dirs->config . DIRECTORY_SEPARATOR . 'security.yml');
-    $roles = \Symfony\Component\Yaml\Yaml::parse($input)['security']['role_hierarchy'];
+    $hierarchy = \Symfony\Component\Yaml\Yaml::parse($input)['security']['role_hierarchy'];
+    $hierarchy['IS_AUTHENTICATED_ANONYMOUSLY'] = null;
+
+    $list = [];
+
+    foreach($hierarchy as $key => $values) {
+        $list[] = $key;
+        $list = array_merge($list, is_array($values)?$values:[]);
+    }
+
+    $list = array_unique($list, SORT_STRING);
+
+    $roles = new \stdClass();
+    $roles->list = $list;
+    $roles->assoc = array_fill_keys($list, true);
+    $roles->chierarchy  = $hierarchy;
 
     return $roles;
 });

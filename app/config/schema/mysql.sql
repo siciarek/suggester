@@ -28,23 +28,32 @@ CREATE TABLE `suggestion` (
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`) ON DELETE CASCADE
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 
-INSERT INTO `suggestion_type` (`name`) VALUES('error');
-INSERT INTO `suggestion_type` (`name`) VALUES('feature_request');
-INSERT INTO `suggestion_type` (`name`) VALUES('change_request');
-INSERT INTO `suggestion_type` (`name`) VALUES('comment');
-INSERT INTO `suggestion_type` (`name`) VALUES('other');
-
-CREATE TABLE user (
+CREATE TABLE `user` (
   `id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `enabled` BOOLEAN NOT NULL DEFAULT true,
   `username` VARCHAR(127)NOT NULL,
   `email` VARCHAR(127) NOT NULL,
   `password` VARCHAR(127) NOT NULL,
   `first_name` VARCHAR(127) NOT NULL,
   `last_name` VARCHAR(127) NOT NULL,
+  `gender` ENUM('unknown', 'female', 'male', 'both') DEFAULT 'unknown',
+  `description` VARCHAR(255),
+  `roles` VARCHAR(255) NOT NULL DEFAULT '[]',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME
+) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
+
+CREATE TABLE `group` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTO_INCREMENT,
+  `name` VARCHAR(64) NOT NULL,
+  `description` VARCHAR(255),
   `roles` VARCHAR(255) NOT NULL DEFAULT '[]'
 ) ENGINE = InnoDB DEFAULT CHARSET = utf8 COLLATE = utf8_unicode_ci;
 
-INSERT INTO user (`username`, `email`, `password`, `first_name`, `last_name`, `roles`) VALUES
-('czesolak', 'czesolak@example.com', MD5('password'), 'Czesław', 'Olak', '[ROLE_USER]');
-INSERT INTO user (`username`, `email`, `password`, `first_name`, `last_name`, `roles`) VALUES
-('mariolak', 'mariolak@example.com', MD5('password'), 'Marianna', 'Olak', '[ROLE_ADMIN]');
+CREATE TABLE `user_group` (
+  `user_id` INTEGER NOT NULL,
+  `group_id` INTEGER NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`group_id`) REFERENCES `group`(`id`) ON DELETE CASCADE,
+  PRIMARY KEY (`user_id`, `group_id`)
+) ENGINE = InnoDB;

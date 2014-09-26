@@ -25,23 +25,32 @@ CREATE TABLE `suggestion` (
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`)
 );
 
-INSERT INTO suggestion_type (`name`) VALUES('error');
-INSERT INTO suggestion_type (`name`) VALUES('feature_request');
-INSERT INTO suggestion_type (`name`) VALUES('change_request');
-INSERT INTO suggestion_type (`name`) VALUES('comment');
-INSERT INTO suggestion_type (`name`) VALUES('other');
-
 CREATE TABLE `user` (
-  `id` INTEGER PRIMARY KEY AUTOINCREMENT,
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `enabled` BOOLEAN NOT NULL DEFAULT true,
   `username` TEXT NOT NULL,
   `email` TEXT NOT NULL,
   `password` TEXT NOT NULL,
   `first_name` TEXT NOT NULL,
   `last_name` TEXT NOT NULL,
-  `roles` TEXT NOT NULL
+  `gender` CHECK(`gender` IN ('unknown', 'female', 'male', 'both')) NOT NULL DEFAULT 'unknown',
+  `description` TEXT,
+  `roles` TEXT NOT NULL DEFAULT '[]',
+  `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME
 );
 
-INSERT INTO user (`username`, `email`, `password`, `first_name`, `last_name`, `roles`) VALUES
-('czesolak', 'czesolak@example.com', MD5('password'), 'Czesław', 'Olak', '[ROLE_USER]');
-INSERT INTO user (`username`, `email`, `password`, `first_name`, `last_name`, `roles`) VALUES
-('mariolak', 'mariolak@example.com', MD5('password'), 'Marianna', 'Olak', '[ROLE_ADMIN]');
+CREATE TABLE `group` (
+  `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+  `name` TEXT NOT NULL,
+  `description` TEXT,
+  `roles` TEXT NOT NULL DEFAULT '[]'
+);
+
+CREATE TABLE `user_group` (
+  `user_id` INTEGER NOT NULL,
+  `group_id` INTEGER NOT NULL,
+  FOREIGN KEY (`user_id`) REFERENCES `user`(`id`) ON DELETE CASCADE,
+  FOREIGN KEY (`group_id`) REFERENCES `group`(`id`) ON DELETE CASCADE,
+  PRIMARY KEY (`user_id`, `group_id`)
+);

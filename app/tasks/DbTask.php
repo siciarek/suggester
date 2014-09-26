@@ -20,7 +20,6 @@ class DbTask extends \Phalcon\CLI\Task
         $this->dbconf = Phalcon\DI::getDefault()->getConfig()->database;
         $file = $this->getDI()->getConfig()->dirs->config . DIRECTORY_SEPARATOR  . 'schema' . DIRECTORY_SEPARATOR  . $this->dbconf->adapter . '.sql';
         $this->schema = realpath($file);
-        $this->sql = file_get_contents($this->schema);
 
         if($this->schema === false) {
             throw new \Exception('Unsupported database adapter: ' . $this->dbconf->adapter);
@@ -45,7 +44,8 @@ class DbTask extends \Phalcon\CLI\Task
                 chmod($dbfile, 0664);
 
                 $db->createFunction('MD5', 'md5');
-                $db->exec($this->sql);
+                $db->exec(file_get_contents($this->schema));
+                $db->exec(file_get_contents(preg_replace('/sqlite.sql$/', 'fixtures.sql', $this->schema)));
                 break;
 
             default:
@@ -110,6 +110,18 @@ class DbTask extends \Phalcon\CLI\Task
             $this->schema
         );
 
-        return `$cmd`;
+        $ret = `$cmd`;
+
+        $cmd = sprintf('%s -u"%s" %s -D"%s" < %s',
+            MYSQL,
+            $dbconf->username,
+            $dbconf->password ? '-p "' . $dbconf->password . '"' : '',
+            $dbconf->dbname,
+            preg_replace('/mysql.sql$/', 'fixtures.sql', $this->schema)
+        );
+
+        $ret .= `$cmd`;
+
+        return $ret;
     }
 }
