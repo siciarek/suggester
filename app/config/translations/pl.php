@@ -3,11 +3,13 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'form.csrf_validation_failed' => 'Niezgodność klucza CSRF, prawdopodobna próba nadużycia.',
   'user.sign_out' => 'Wyloguj się',
   'error.invalid_access_data' => 'Niewłaściwe dane dostępowe.',
+  'error.user_disabled' => 'Konto zostało zablokowane, skontaktuj się z administratorem.',
   'user.sign_in' => 'Zaloguj się',
   'user.password' => 'Hasło',
-  'user.username' => 'Nazwa użytkownika',
+  'user.username' => 'Login',
   'common.search' => 'Wpisz szukaną frazę…',
   'status is required' => 'Status jest wymagany.',
   'suggestion.status' => 'Status',

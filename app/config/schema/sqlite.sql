@@ -27,12 +27,12 @@ CREATE TABLE `suggestion` (
 
 CREATE TABLE `user` (
   `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `enabled` BOOLEAN NOT NULL DEFAULT true,
-  `username` TEXT NOT NULL,
+  `enabled` BOOLEAN NOT NULL DEFAULT 1,
+  `username` TEXT NOT NULL UNIQUE,
   `email` TEXT NOT NULL,
   `password` TEXT NOT NULL,
-  `first_name` TEXT NOT NULL,
-  `last_name` TEXT NOT NULL,
+  `first_name` TEXT,
+  `last_name` TEXT,
   `gender` CHECK(`gender` IN ('unknown', 'female', 'male', 'both')) NOT NULL DEFAULT 'unknown',
   `description` TEXT,
   `roles` TEXT NOT NULL DEFAULT '[]',
@@ -42,7 +42,7 @@ CREATE TABLE `user` (
 
 CREATE TABLE `group` (
   `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  `name` TEXT NOT NULL,
+  `name` TEXT NOT NULL UNIQUE,
   `description` TEXT,
   `roles` TEXT NOT NULL DEFAULT '[]'
 );

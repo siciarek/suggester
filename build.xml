@@ -41,7 +41,7 @@
         <echo/>
 
         <exec executable="bin/behat.bat">
-            <arg line=""/>
+            <arg line="--stop-on-failure"/>
         </exec>
 
         <echo/>

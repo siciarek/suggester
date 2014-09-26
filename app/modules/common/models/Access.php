@@ -1,19 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Jacek
- * Date: 26.09.14
- * Time: 09:29
- */
 
 namespace Application\Common;
 
-
+/**
+ * Class Access
+ * @package Application\Common
+ */
 class Access {
     public $username;
     public $password;
 
-    public function __construct($username, $password)
+    /**
+     * @param null $username
+     * @param null $password
+     */
+    public function __construct($username = null, $password = null)
     {
         $this->username = $username;
         $this->password = $password;

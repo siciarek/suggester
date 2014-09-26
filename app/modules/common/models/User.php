@@ -9,6 +9,9 @@
 
 namespace Application\Common;
 
+use Application\Common\Exceptions\InvalidAccessDataException;
+use Application\Common\Exceptions\UserDisabledException;
+
 class User implements \Phalcon\DI\InjectionAwareInterface
 {
 
@@ -27,11 +30,19 @@ class User implements \Phalcon\DI\InjectionAwareInterface
     {
         $this->user = \Application\Frontend\Entity\User::findFirstByUsername($access->username);
 
+        if($this->user instanceof \Application\Frontend\Entity\User && $this->user->getEnabled() == false) {
+            throw new UserDisabledException();
+        }
+
         $authenticated = true;
         $authenticated &= $this->user instanceof \Application\Frontend\Entity\User;
         $authenticated &= $authenticated && $this->getDi()->getSecurity()->checkHash($access->password, $this->user->getPassword());
 
-        return $authenticated;
+        if($authenticated == false) {
+            throw new InvalidAccessDataException();
+        }
+
+        return true;
     }
 
     public function expandRole($role)

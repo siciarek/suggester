@@ -3,6 +3,7 @@
 // app/config/translations/en.php
 
 $messages = array (
+  'form.csrf_validation_failed' => 'CSRF validation failed.',
   'user.sign_out' => 'Sign out*',
   'error.invalid_access_data' => 'Invalid access data',
   'user.sign_in' => 'Sign in',

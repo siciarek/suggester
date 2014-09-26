@@ -70,7 +70,7 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
                 $route = $dispatcher->getActiveController()->router->getMatchedRoute()->getName();
                 $params = $dispatcher->getActiveController()->router->getParams();
 
-                $this->getDI()->getSession()->set('$TARGET$', (['for' => $route ] + $params));
+                $this->getDI()->getSession()->set('$PHALCON/REQUIRED_URL$', (['for' => $route ] + $params));
                 return $dispatcher->getActiveController()->response->redirect(['for' => 'user.sign_in']);
             }
         }

@@ -15,16 +15,17 @@
             {% for m in form.getMessages() %}
                 <div class="alert alert-warning">
                     <i class="fa fa-warning fa-fw fa-lg"></i>
-                    {{ m.getMessage() }}
+                    {{ m.getMessage()|trans }}
                 </div>
             {% endfor %}
 
             {% for field in [ 'csrf' ] %}
                 {{ form.render(field) }}
                 {% for m in form.get(field).getMessages() %}
-                    {% if loop.first %}<ul class="text-warning">{% endif %}
-                    <li>{{ m.getMessage()|trans }}</li>
-                    {% if loop.last %}</ul>{% endif %}
+                    <div class="alert alert-warning">
+                        <i class="fa fa-warning fa-fw fa-lg"></i>
+                        {{ m.getMessage()|trans }}
+                    </div>
                 {% endfor %}
             {% endfor %}
 

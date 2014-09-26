@@ -11,6 +11,13 @@ security:
             - ROLE_ADMIN
             - ROLE_ALLOWED_TO_SWITCH
 
+        ROLE_WORKER:
+            - ROLE_USER
+
+        ROLE_MANAGER:
+            - ROLE_WORKER
+            - ROLE_ALOWED_TO_SWICH_SUBORDINATES
+
         ROLE_ALLOWED_TO_ADD_ARTICLE:
             - ROLE_USER
 
