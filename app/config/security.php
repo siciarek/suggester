@@ -1,10 +1,7 @@
 <?php
 
 $di->set('security', function () use ($di) {
-
     $security = new Application\Common\Security();
-
-    //Set the password hashing factor to 12 rounds
     $security->setWorkFactor($di->get('config')->security->rounds);
 
     return $security;
@@ -23,9 +20,9 @@ $di->set('roles', function () use ($di) {
 
     $list = [];
 
-    foreach($hierarchy as $key => $values) {
+    foreach ($hierarchy as $key => $values) {
         $list[] = $key;
-        $list = array_merge($list, is_array($values)?$values:[]);
+        $list = array_merge($list, is_array($values) ? $values : []);
     }
 
     $list = array_unique($list, SORT_STRING);
@@ -33,7 +30,7 @@ $di->set('roles', function () use ($di) {
     $roles = new \stdClass();
     $roles->list = $list;
     $roles->assoc = array_fill_keys($list, true);
-    $roles->chierarchy  = $hierarchy;
+    $roles->hierarchy = $hierarchy;
 
     return $roles;
 });

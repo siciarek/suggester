@@ -53,8 +53,8 @@ class User implements \Phalcon\DI\InjectionAwareInterface
 
             $this->expanded[] = $role;
 
-            if (array_key_exists($role, $roles->chierarchy) && is_array($roles->chierarchy[$role])) {
-                foreach ($roles->chierarchy[$role] as $r) {
+            if (array_key_exists($role, $roles->hierarchy) && is_array($roles->hierarchy[$role])) {
+                foreach ($roles->hierarchy[$role] as $r) {
                     $this->expandRole($r, $this->expanded);
                 }
             }
