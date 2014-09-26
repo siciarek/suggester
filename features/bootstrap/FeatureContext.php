@@ -36,6 +36,15 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
 
 
     /**
+     * @When wypełnię pole tekstowe :field wartością:
+     */
+    public function wypelniePoleTekstoweWartoscia($field, PyStringNode $value)
+    {
+        $field = $this->fixStepArgument($field);
+        $this->fillField($field, $value->getRaw());
+    }
+
+    /**
      * @Given że aplikacja jest w środowisku produkcyjnym
      */
     public function zeAplikacjaJestWSrodowiskuProdukcyjnym()

@@ -35,7 +35,10 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii przez użytkownikó
     Zakładając że odwiedzę stronę "/"
     I nie zobaczę tekstu "<sugestia>"
     Jeżeli odwiedzę stronę "/form?application=Suggester"
-    I wypełnię pole "content" wartością "<sugestia>"
+    I wypełnię pole tekstowe "content" wartością:
+    """
+    <sugestia>
+    """
     I wybiorę opcję "<typ>" w polu "type_id"
     I wybiorę opcję "<priorytet>" w polu "priority"
     I wypełnię ukryte pole "author" wartością "Acceptance Test"
