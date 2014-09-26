@@ -1,7 +1,7 @@
 # language: pl
 
 @access @form
-Potrzeba biznesowa: Zapewnienie dostępu do odpowiednich elementów aplikacji uprawnionym użytkownikom
+Potrzeba biznesowa: Zapewnienie uprawnionym użytkownikom dostępu do odpowiednich elementów aplikacji
   Aby zapewnić dostęp do części aplikacji tylko uprawnionym użytkownikom
   As a Twórca aplikacji
   Chciałbym mieć pewność, że tylko uprawnieni użytkownicy mają do nich dostęp

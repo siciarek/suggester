@@ -4,6 +4,7 @@ namespace Application\Frontend\Form;
 
 
 use Application\Common\CommonForm;
+use Application\Common\Access;
 use Phalcon\Forms\Element\Password;
 use Phalcon\Forms\Element\Submit;
 use Phalcon\Forms\Element\Text;
@@ -18,7 +19,7 @@ class UserSignInForm extends CommonForm {
      */
     public function initialize($data, $options) {
 
-        $this->setEntity(new \stdClass());
+        $this->setEntity(new Access());
 
         /**
          * @var \Phalcon\Translate\Adapter\NativeArray $trans

@@ -12,7 +12,6 @@ use Phalcon\Exception;
 
 class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
     const ANNOTATION_NAME = 'Secure';
-    const NOT_SECURED = 'IS_AUTHENTICATED_ANONYMOUSLY';
 
     /**
      * To zdarzenie jest wywoływane przed wykonaniem każdego routingu w dispatcherze
@@ -39,7 +38,7 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
         }
 
         // Jeżeli nie ma żadnych zabezpieczeń lub akcja nie jest zabezpieczona:
-        if (count($roles) === 0 or (array_key_exists('action', $roles) and in_array(self::NOT_SECURED, $roles['action']))) {
+        if (count($roles) === 0 or (array_key_exists('action', $roles) and in_array(\Application\Common\User::NOT_SECURED, $roles['action']))) {
             return true;
         }
 
@@ -49,7 +48,7 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
         if (array_key_exists('action', $roles)) {
             $required = $roles['action'];
         } else {
-            if (false == in_array(self::NOT_SECURED, $roles['controller'])) {
+            if (false == in_array(\Application\Common\User::NOT_SECURED, $roles['controller'])) {
                 $required = $roles['controller'];
             }
         }
@@ -57,7 +56,7 @@ class SecurePlugin extends \Phalcon\Mvc\User\Plugin {
         $access = false;
 
         foreach ($required as $role) {
-            if ($this-> getDI()->getUser()->isGranted($role)) {
+            if ($this->getDI()->getUser()->isGranted($role)) {
                 $access = true;
                 break;
             }

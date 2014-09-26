@@ -52,8 +52,8 @@ class FeatureContext extends Behat\MinkExtension\Context\MinkContext implements 
      */
     public function zeWSystemieNieMaTestowychDanych() {
         $suggestions = Suggestion::query()
-//            ->where('author = :author:')
-//            ->bind([ 'author' => 'Acceptance Test' ])
+            ->where('author = :author:')
+            ->bind([ 'author' => 'Acceptance Test' ])
             ->execute();
 
         foreach ($suggestions as $s) {

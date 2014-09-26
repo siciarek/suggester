@@ -1,6 +1,6 @@
 <?php
 
-define('MYSQL', 'mysql');
+define('MYSQL', 'mysql --default-character-set=utf8');
 
 class DbTask extends \Phalcon\CLI\Task
 {

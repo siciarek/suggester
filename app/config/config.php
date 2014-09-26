@@ -2,6 +2,8 @@
 
 $di->setShared('config', function () {
     $config = new \Phalcon\Config\Adapter\Ini(APPLICATION_PATH . '/config/config.ini');
+
+
     foreach($config->dirs as $name => $value) {
         $dir = APPLICATION_PATH . $value;
 
@@ -13,12 +15,13 @@ $di->setShared('config', function () {
 
         $config->dirs->$name = realpath($dir);
     }
+
     return $config;
 });
 
 $di->setShared('crypt', function() use ($di) {
     $crypt = new Phalcon\Crypt();
-    $crypt->setKey($di->getConfig()->application->secret); //Use your own key!
+    $crypt->setKey($di->getConfig()->application->secret); // Use your own key!
     return $crypt;
 });
 

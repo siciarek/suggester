@@ -1,16 +1,6 @@
 <?php
 
-class standardClass
-{
-    public $username;
-    public $password;
-
-    public function __construct($username, $password)
-    {
-        $this->username = $username;
-        $this->password = $password;
-    }
-}
+use \Application\Common\Access;
 
 /**
  * User access test
@@ -22,27 +12,37 @@ class AccessTest extends \Application\Test\UnitTestCase
     public static function loginDataProvider()
     {
         return [
-            [true,  new standardClass('czesolak', 'password'), 'The user logs in with the correct access data.'],
-            [false, new standardClass('incorrect', 'password'), 'The user logs in with the incorrect username.'],
-            [false, new standardClass('czesolak', 'incorrect'), 'The user logs in with the incorrect password.'],
-            [false, new standardClass(null, null), 'The user logs in with nulls.'],
-            [false, new standardClass('', ''), 'The user logs in with empty strings.'],
+            [true,  new Access('czesolak', 'password'), 'The user logs in with the correct access data.'],
+            [false, new Access('incorrect', 'password'), 'The user logs in with the incorrect username.'],
+            [false, new Access('czesolak', 'incorrect'), 'The user logs in with the incorrect password.'],
+            [false, new Access(null, null), 'The user logs in with nulls.'],
+            [false, new Access('', ''), 'The user logs in with empty strings.'],
         ];
     }
 
     public static function rolesDataProvider()
     {
         return [
-            [true,  'ROLE_USER', new standardClass('czesolak', 'password'), 'The user logs in with the correct access data.'],
-            [false, 'ROLE_USER', new standardClass('incorrect', 'password'), 'The user logs in with the incorrect username.'],
-            [false, 'ROLE_USER', new standardClass('czesolak', 'incorrect'), 'The user logs in with the incorrect password.'],
-            [false, 'ROLE_USER', new standardClass(null, null), 'The user logs in with nulls.'],
-            [false, 'ROLE_USER', new standardClass('', ''), 'The user logs in with empty strings.'],
+            [true, 'IS_AUTHENTICATED_ANONYMOUSLY', new Access('', ''), 'User is not logged in but wants to access public area.'],
 
-            [false, 'ROLE_ADMIN', new standardClass('czesolak', 'password'), 'The user logs in with the correct access data but has not granted a role.'],
-            [true,  'ROLE_ADMIN', new standardClass('mariolak', 'password'), 'The user logs in with the correct access data and has granted a role.'],
-            [true,  'ROLE_USER',  new standardClass('mariolak', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
-            [true,  'IS_AUTHENTICATED_ANONYMOUSLY',  new standardClass('mariolak', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'ROLE_USER', new Access('czesolak', 'password'), 'The user logs in with the correct access data.'],
+            [false, 'ROLE_USER', new Access('incorrect', 'password'), 'The user logs in with the incorrect username.'],
+            [false, 'ROLE_USER', new Access('czesolak', 'incorrect'), 'The user logs in with the incorrect password.'],
+            [false, 'ROLE_USER', new Access(null, null), 'The user logs in with nulls.'],
+            [false, 'ROLE_USER', new Access('', ''), 'The user logs in with empty strings.'],
+
+            [false, 'ROLE_ADMIN', new Access('czesolak', 'password'), 'The user logs in with the correct access data but has not granted a role.'],
+
+            [true,  'ROLE_ADMIN', new Access('mariolak', 'password'), 'The user logs in with the correct access data and has granted a role.'],
+            [true,  'ROLE_USER',  new Access('mariolak', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'IS_AUTHENTICATED_ANONYMOUSLY',  new Access('mariolak', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+
+            [true,  'ROLE_SUPER_ADMIN', new Access('hasim', 'password'), 'The user logs in with the correct access data and has granted a role.'],
+            [true,  'ROLE_ADMIN',  new Access('hasim', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'ROLE_ALLOWED_TO_SWITCH',  new Access('hasim', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'ROLE_USER',  new Access('hasim', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'IS_AUTHENTICATED_ANONYMOUSLY',  new Access('hasim', 'password'), 'The user logs in with the correct access data and has granted dependent role.'],
+            [true,  'ROLE_PRIVILEGED_ARTICLE_EDITOR',  new Access('hasim', 'password'), 'The user has granted role because has ROLE_SUPER_ADMIN role.'],
         ];
     }
 
@@ -68,8 +68,18 @@ class AccessTest extends \Application\Test\UnitTestCase
      */
     public function testLogin($expected, $accessData, $message)
     {
+        /**
+         * Mock session
+         */
+        $_SESSION = array();
+
         $given = $this->di->getUser()->authenticate($accessData);
         $this->assertEquals($expected, $given, $message);
+        $this->assertEquals($expected, $this->di->getUser()->isAuthenticated(), 'IS AUTHENTICATED ' . $message);
+        $this->assertEquals($this->di->getUser()->isAuthenticated() ? $accessData->username : null, $this->di->getUser()->get('username'), 'GET PARAMETER ' . $message);
+
+        $this->di->getUser()->logout();
+        $this->assertEquals(false, $this->di->getUser()->isAuthenticated(), 'IS NOT AUTHENTICATED ' . $message);
     }
 
     /**
@@ -91,6 +101,9 @@ class AccessTest extends \Application\Test\UnitTestCase
      */
     public function testRoles($expected, $role, $accessData, $message)
     {
+        /**
+         * Mock session
+         */
         $_SESSION = array();
 
         $this->di->getUser()->authenticate($accessData);

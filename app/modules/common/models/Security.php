@@ -11,10 +11,6 @@ class Security extends \Phalcon\Security
 
     public function checkHash($password, $passwordHash, $maxPasswordLength = null)
     {
-        if ($passwordHash === md5($password)) {
-            return true;
-        }
-
-        return false;
+        return $this->hash($password) === $passwordHash;
     }
 }

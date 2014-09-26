@@ -1,5 +1,6 @@
 <?php
 namespace Application\Common\Controller;
+use Application\Common\Access;
 
 /**
  * @Secure(ROLE_USER)
@@ -15,9 +16,7 @@ class TestController extends CommonController {
 
         $output = [];
 
-        $accessData = new \stdClass();
-        $accessData->username = 'czesolak';
-        $accessData->password = 'password';
+        $accessData = new Access('czesolak', 'password');
 
         $this->getDI()->getUser()->authenticate($accessData);
 
@@ -27,6 +26,8 @@ class TestController extends CommonController {
             'ROLE_ADMIN',
             'ROLE_SUPER_ADMIN',
             'ROLE_PRIVILEGED_ARTICLE_EDITOR',
+            'ROLE_BASIC_ARTICLE_READER',
+            'ROLE_BASIC_ARTICLE_EDITOR',
         ];
 
         foreach($roles as $role) {

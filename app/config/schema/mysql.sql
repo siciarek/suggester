@@ -1,5 +1,3 @@
-SET NAMES 'utf8';
-
 CREATE TABLE `session` (
   `session_id` VARCHAR(35) NOT NULL,
   `data` text NOT NULL,

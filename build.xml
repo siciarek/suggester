@@ -9,15 +9,45 @@
     <property name="doc.html.target.dir" value="public/doc"/>
     <property name="doc.pdf.target.dir" value="public/doc/pdf"/>
 
-    <target name="doc" depends="doc-html, doc-pdf" description="Generowanie dokumentacji projektu"/>
+    <target name="doc" depends="doc-html, doc-pdf" description="Generate project docs"/>
 
-    <target name="doc-html" description="Generowanie dokumentacji projektu w formacie HTML">
+    <target name="doc-html" description="Generate project docs in HTML">
         <exec executable="sphinx-build">
             <arg line="-a -b html ${doc.source.dir} ${doc.html.target.dir}"/>
         </exec>
     </target>
 
-    <target name="doc-pdf" description="Generowanie dokumentacji projektu w formacie PDF">
+    <target name="t" depends="test" description="Run all tests (alias)"/>
+
+    <target name="test" depends="tu, tb" description="Run all tests" />
+
+    <target name="tu" description="Run phpunit tests">
+        <echo>--------------------------------------------------------------------------</echo>
+        <echo>&gt;&gt;&gt; PHPUNIT TESTS:</echo>
+        <echo>--------------------------------------------------------------------------</echo>
+        <echo/>
+
+        <exec executable="bin/phpunit.bat">
+            <arg line="-c tests/phpunit.xml.dist"/>
+        </exec>
+
+        <echo/>
+    </target>
+
+    <target name="tb" description="Run behat tests">
+        <echo>--------------------------------------------------------------------------</echo>
+        <echo>&gt;&gt;&gt; BEHAT TESTS:</echo>
+        <echo>--------------------------------------------------------------------------</echo>
+        <echo/>
+
+        <exec executable="bin/behat.bat">
+            <arg line=""/>
+        </exec>
+
+        <echo/>
+    </target>
+
+    <target name="doc-pdf" description="Generate project docs in PDF">
         <exec executable="sphinx-build">
             <arg line="-a -b latex ${doc.source.dir} ${doc.pdf.target.dir}"/>
         </exec>
@@ -31,15 +61,15 @@
         </delete>
     </target>
 
-    <target name="ccx" depends="cc" description="Czyszczenie katalogu cache (alias)"/>
+    <target name="ccx" depends="cc" description="Clear cache dirs (alias)"/>
 
-    <target name="cc" description="Czyszczenie katalogu cache">
+    <target name="cc" description="Clear cache dirs">
         <delete includeemptydirs="true" verbose="true" >
             <fileset dir="app/cache" includes="**/*"/>
         </delete>
     </target>
 
-    <target name="db" description="Reset bazy danych">
+    <target name="db" description="Reset database">
         <exec executable="${php}">
             <arg line="app/console db"/>
         </exec>
