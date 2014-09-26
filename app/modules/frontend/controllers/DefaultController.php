@@ -14,25 +14,24 @@ class DefaultController extends CommonController {
     /**
      * @Get("/", name="frontend.list")
      * @Get("/", name="home")
-     * @Get("/suggestions.{format:html|xls|xlsx}}", name="frontend.list_export")
+     * @Get("/suggestions.{format:html|xls|xlsx|csv}}", name="frontend.list_export")
      */
     public function listAction($format = 'html') {
 
         $data = $this->modelsManager->createBuilder()
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.id DESC');
+        $type = [];
 
-        if (in_array($format, ['xls', 'xlsx'])) {
+        foreach (SuggestionType::find()->toArray() as $t) {
+            $type[$t['id']] = $t['name'];
+        }
 
-            return $this->getExcelResponse($format, $data);
+        if (in_array($format, ['xls', 'xlsx', 'csv'])) {
+
+            return $this->getExcelResponse($format, $data, $type);
 
         } else {
-
-            $type = [];
-
-            foreach (SuggestionType::find()->toArray() as $t) {
-                $type[$t['id']] = $t['name'];
-            }
 
             $this->view->type = $type;
 
@@ -62,7 +61,7 @@ class DefaultController extends CommonController {
      * @param $data
      * @return \Phalcon\Http\ResponseInterface
      */
-    public function getExcelResponse($format, $data) {
+    public function getExcelResponse($format, $data, $type) {
 
         /**
          * @var \Phalcon\Translate\Adapter\NativeArray $trans
@@ -71,6 +70,18 @@ class DefaultController extends CommonController {
         $tmpfname = tempnam($this->getDI()->getConfig()->dirs->temp, 'XLS');
         $fname = sprintf('%s.%s', 'suggestions', $format);
         $title = preg_replace('/\*+$/', '', $trans->query('suggestion.list'));
+
+        $contentTypes = [
+            'xls' => 'application/vnd.ms-excel',
+            'xlsx' => 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+            'csv' => 'application/csv',
+        ];
+
+        $writers = [
+            'xls' => 'Excel5',
+            'xlsx' => 'Excel2007',
+            'csv' => 'CSV',
+        ];
 
         $params = $this->view->getParamsToView();
         $creator = sprintf('%s %s', $params['app_name'], $params['app_version']);
@@ -90,6 +101,11 @@ class DefaultController extends CommonController {
             }, array_keys($source[0]));
 
             array_unshift($source, $headers);
+
+
+            for ($i = 1; $i < count($source); $i++) {
+                $source[$i]['type_id'] = $trans->query('suggestion.' . $type[intval($source[$i]['type_id'])]);
+            }
 
             $sheet
                 ->setSelectedCellByColumnAndRow(0, 1)
@@ -118,10 +134,9 @@ class DefaultController extends CommonController {
             ->setSubject('Office 2005 XLS Test Document')
             ->setDescription('Test document for Office 2005 XLS, generated using PHP classes.')
             ->setKeywords('office 2005 openxml php')
-            ->setCategory('Test result file')
-        ;
+            ->setCategory('Test result file');
 
-        $writer = \PHPExcel_IOFactory::createWriter($xls, $format === 'xls' ? 'Excel5' : 'Excel2007');
+        $writer = \PHPExcel_IOFactory::createWriter($xls, $writers[$format]);
         $writer->save($tmpfname);
 
         // Get file content:
@@ -129,8 +144,6 @@ class DefaultController extends CommonController {
 
         // Make tidy:
         unlink($tmpfname);
-
-        $contentType = $format === 'xls' ? 'application/vnd.ms-excel' : 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
 
         $headers = array(
             'Content-length' => filesize($tmpfname),
@@ -145,7 +158,7 @@ class DefaultController extends CommonController {
 
         return $this->response
             ->setStatusCode(200, 'OK')
-            ->setContentType($contentType)
+            ->setContentType($contentTypes[$format])
             ->setContent($content);
     }
 
@@ -206,17 +219,16 @@ class DefaultController extends CommonController {
             if ($form->isValid()) {
                 $entity->setAgent($this->request->getUserAgent());
                 $entity->setCreatedAt(date('Y-m-d H:i:s'));
-                $entity->setPageUrl(preg_replace('/^(https?:)_/', '$1//', $entity->getPageUrl() ));
+                $entity->setPageUrl(preg_replace('/^(https?:)_/', '$1//', $entity->getPageUrl()));
 
                 // TODO: create constants in Suggester class
                 $entity->setStatus('pending');
 
-                if(false === $entity->save()) {
-                    foreach($entity->getMessages() as $m) {
-                        $form->get('content')->appendMessage(new \Phalcon\Validation\Message($m->getMessage())) ;
+                if (false === $entity->save()) {
+                    foreach ($entity->getMessages() as $m) {
+                        $form->get('content')->appendMessage(new \Phalcon\Validation\Message($m->getMessage()));
                     }
-                }
-                else {
+                } else {
 
                     $router = $this->getDi()->getUrl();
 

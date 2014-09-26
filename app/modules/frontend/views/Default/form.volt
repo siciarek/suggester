@@ -1,5 +1,47 @@
 {% extends 'templates/base.volt' %}
 
+{% block brandurl %}{{ url({'for':'frontend.form'}) }}{% endblock %}
+
+{% block access %}{% endblock %}
+
+{% block content %}
+    {{ form(null, 'method': 'post', 'id' : 'suggestion-form', 'class' : 'form-horizontal') }}
+
+    {% for m in form.getMessages() %}
+        <div class="alert alert-warning">
+            <i class="fa fa-warning fa-fw fa-lg"></i>
+            {{ m.getMessage() }}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            <i class="fa fa-edit fa-fw fa-lg"></i>
+            {{ 'suggestion.prompt'|trans }}
+        </div>
+    {% endfor %}
+
+    {% for field in [ 'type_id', 'content', 'priority' ] %}
+        <div class="input-group">
+            {{ form.label(field, { 'class' : 'input-group-addon' }) }}
+            {{ form.render(field, { 'class' : 'form-control' }) }}
+        </div>
+        {% for m in form.get(field).getMessages() %}
+            {% if loop.first %}<ul class="text-warning">{% endif %}
+            <li>{{ m.getMessage()|trans }}</li>
+            {% if loop.last %}</ul>{% endif %}
+        {% endfor %}
+    {% endfor %}
+
+    {% for field in [ 'csrf', 'page_url', 'author', 'application' ] %}
+        {{ form.render(field) }}
+    {% endfor %}
+
+    <br/>
+
+    {{ form.render('submit', { 'class': 'btn btn-default btn-lg pull-right' }) }}
+    <button type="button" class="btn btn-default btn-lg pull-right hidden cancel">{{ 'common.close'|trans }}</button>
+    </form>
+{% endblock %}
+
 {% block javascripts %}
     {{ super() }}
     <script>
@@ -68,7 +110,6 @@
     {{ super() }}
     <style>
         body {
-            padding: 42px 24px;
             background: #F8F8F8;
         }
 
@@ -80,43 +121,4 @@
             margin-right: 12px;
         }
     </style>
-{% endblock %}
-
-{% block content %}
-
-    {{ form(null, 'method': 'post', 'id' : 'suggestion-form', 'class' : 'form-horizontal') }}
-
-    {% for m in form.getMessages() %}
-        <div class="alert alert-warning">
-            <i class="fa fa-warning fa-fw fa-lg"></i>
-            {{ m.getMessage() }}
-        </div>
-    {% else %}
-        <div class="alert alert-info">
-            <i class="fa fa-edit fa-fw fa-lg"></i>
-            {{ 'suggestion.prompt'|trans }}
-        </div>
-    {% endfor %}
-
-    {% for field in [ 'type_id', 'content', 'priority' ] %}
-        <div class="input-group">
-            {{ form.label(field, { 'class' : 'input-group-addon' }) }}
-            {{ form.render(field, { 'class' : 'form-control' }) }}
-        </div>
-        {% for m in form.get(field).getMessages() %}
-            {% if loop.first %}<ul class="text-warning">{% endif %}
-            <li>{{ m.getMessage()|trans }}</li>
-            {% if loop.last %}</ul>{% endif %}
-        {% endfor %}
-    {% endfor %}
-
-    {% for field in [ 'csrf', 'page_url', 'author', 'application' ] %}
-        {{ form.render(field) }}
-    {% endfor %}
-
-    <br/>
-
-    {{ form.render('submit', { 'class': 'btn btn-default btn-lg pull-right' }) }}
-    <button type="button" class="btn btn-default btn-lg pull-right hidden cancel">{{ 'common.close'|trans }}</button>
-    </form>
 {% endblock %}

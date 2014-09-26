@@ -1,11 +1,16 @@
 {% extends 'templates/base.volt' %}
 
+{% block brandurl %}{{ url({'for':'frontend.form'}) }}{% endblock %}
+
+{% block access %}{% endblock %}
+
 {% block content %}
 
     <div class="alert alert-info">
         <i class="fa fa-check-square-o fa-fw fa-lg"></i>
         {{ 'suggestion.confirmation'|trans }}
     </div>
+
     <div class="buttons">
         <a href="#" class="btn btn-default btn-lg cancel hidden">{{ 'common.no'|trans }}</a>
 
@@ -67,7 +72,6 @@
         }
 
         body {
-            padding: 42px 24px;
             background: #F8F8F8;
         }
 

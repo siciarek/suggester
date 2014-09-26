@@ -68,37 +68,64 @@
 
 <body>
 
-<div class="container">
-    <ul class="i18n">
-        <li><i class="fa fa-globe fa-fw fa-lg text-primary"></i></li>
-        {% for l in locales %}
-            <li>
-                <a class="{% if l == this.di.getLocale() %}active{% endif %}"
-                   href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l }}</a>
-            </li>
-        {% endfor %}
-    </ul>
-    <div class="user-label text-muted pull-right">
-        {% if user.isAuthenticated() %}
-            <i class="fa fa-user fa-fw fa-lg"></i>
-            {{ user.get('firstName') }} {{ user.get('lastName') }} &lt;{{ user.get('email') }}&gt;
+{% include 'partials/menu.volt' %}
 
-            <a class="text-danger" title="{{ 'user.sign_out'|trans }}" href="{{ url({'for':'user.sign_out'}) }}">
-               <span class="fa-stack">
-                  <i class="fa fa-square fa-stack-2x"></i>
-                  <i class="fa fa-power-off fa-stack-1x fa-inverse"></i>
-                </span>
+<div class="navbar navbar-inverse navbar-static-top">
+    <div class="container">
+
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="{% block brandurl %}{% endblock %}">
+                <i class="fa fa-envelope-o fa-fw fa-lg"></i>
+                {{ app_name }} {{ app_version }}
             </a>
-        {% else %}
-            <a class="text-warning" title="{{ 'user.sign_in'|trans }}" href="{{ url({'for':'user.sign_in'}) }}">
-               <span class="fa-stack">
-                  <i class="fa fa-square fa-stack-2x"></i>
-                  <i class="fa fa-power-off fa-stack-1x fa-inverse"></i>
-                </span>
-            </a>
-        {% endif %}
+        </div>
+
+        <div class="navbar-collapse collapse">
+
+            <ul class="nav navbar-nav">
+                {% for l in locales %}
+                    <li class="{% if l == this.di.getLocale() %}active{% endif %}">
+                        <a href="{{ url({'for':'common.locale', 'locale': l}) }}">{{ l|upper }}</a>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% block access %}
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.isAuthenticated() %}
+                        <li>
+                            <a href="javascript:void(null)">
+                                <i class="fa fa-user fa-fw fa-lg"></i>
+                                {{ user.get('firstName') }} {{ user.get('lastName') }} &lt;{{ user.get('email') }}&gt;
+                            </a>
+                        </li>
+                        <li>
+                            <a title="{{ 'user.sign_out'|trans }}" href="{{ url({'for':'user.sign_out'}) }}">
+                                <i class="fa fa-lock fa-fw fa-lg"></i>
+                                {{ 'user.sign_out'|trans }}
+                            </a>
+                        </li>
+                    {% else %}
+                        <li>
+                            <a title="{{ 'user.sign_in'|trans }}" href="{{ url({'for':'user.sign_in'}) }}">
+                                <i class="fa fa-unlock-alt fa-fw fa-lg"></i>
+                                {{ 'user.sign_in'|trans }}
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            {% endblock %}
+        </div>
+
     </div>
+</div>
 
+<div class="container">
     {% block content %}{% endblock %}
 </div>
 

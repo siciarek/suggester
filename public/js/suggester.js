@@ -2,15 +2,15 @@ var scriptParams = document.getElementById('suggester-script');
 var suggesterApp = scriptParams.getAttribute('data-value');
 var suggesterAuthor = scriptParams.getAttribute('data-from');
 var suggesterPageUrl = location.href.replace(/\/\//,'_');
-var suggesterButtonColor = '#CCCCCC';
+var suggesterButtonColor = '#303030';
 
 suggesterApp = suggesterApp === null ? '' : suggesterApp;
 suggesterAuthor = suggesterAuthor === null ? '' : suggesterAuthor;
 var suggesterFormPage = document.getElementById('suggester-script').getAttribute('src').replace(/js\/.*$/,
     ('form?application=' + suggesterApp + '&author=' + suggesterAuthor + '&page_url=' + suggesterPageUrl));
 
-var suggesterToggleButtonWidth = 48;
-var suggesterToggleButtonHeight = 48;
+var suggesterToggleButtonWidth = 51;
+var suggesterToggleButtonHeight = 51;
 var suggesterWindowWidth = 600;
 var suggesterWindowHeight = 570;
 var timerlen = 5;
@@ -121,7 +121,7 @@ function __toggleSuggester() {
 var __style = '<style type="text/css"> \
 iframe#__screen { border:0; position:relative; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; right:0; top:0; z-index:32000 } \
 a#__suggester_button { text-decoration: none!important; text-align: center; line-height: 36px; font-family:serif; font-size: 32pt; font-weight: bold; \
-   background-color:' + suggesterButtonColor + '; color:#888888; cursor:pointer; position:fixed !important; width: ' + suggesterToggleButtonWidth + 'px; height: ' + suggesterToggleButtonHeight + 'px; \
+   background-color:' + suggesterButtonColor + '; color:#DDDDDD; cursor:pointer; position:fixed !important; width: ' + suggesterToggleButtonWidth + 'px; height: ' + suggesterToggleButtonHeight + 'px; \
    right: 0; top: 0; z-index: 32000 } \
 div#__suggester_window { z-index:64000; display:none; overflow:hidden; position:fixed; width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; \
 right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border-size: 4px; border-style:solid; border-color:' + suggesterButtonColor + ' !important; border-top:0 !important; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \

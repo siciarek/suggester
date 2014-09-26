@@ -1,5 +1,7 @@
 {% extends 'templates/base.volt' %}
 
+{% block brandurl %}{{ url({'for':'home'}) }}{% endblock %}
+
 {% block javascripts %}
     {{ super() }}
     <script>
@@ -27,10 +29,10 @@
 
         </div>
         <div class="col-md-6">
-            <a href="{{ url({'for': 'frontend.list_export', 'format': 'xlsx' }) }}"
+            <a href="{{ url({'for': 'frontend.list_export', 'format': 'csv' }) }}"
                class="btn btn-default btn-lg pull-right{% if items.count() == 0 %} disabled{% endif %}">
                 <i class="fa fa-table fa-lg fa=fw text-muted"></i>&nbsp;
-                {{ 'common.download_excel'|trans }}
+                {{ 'common.download_list'|trans }}
             </a>
         </div>
     </div>
