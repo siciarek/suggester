@@ -1,5 +1,14 @@
 {% extends 'templates/base.volt' %}
 
+{% block javascripts %}
+{{ super() }}
+<script>
+    $(document).ready(function(){
+       rememberLastTab('nav-tabs');
+    });
+</script>
+{% endblock %}
+
 {% block content %}
 
     <h1 class="page-header">
@@ -54,7 +63,9 @@
                     <tbody>
                     {% for u in users %}
                         <tr>
-                            <td><i class="fa {{ u['enabled'] ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa-lg"></i></td>
+                            <td>
+                                <i class="fa {{ u['enabled'] ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa-lg"></i>
+                            </td>
                             <td>{{ u['id'] }}</td>
                             <td>{{ u['username'] }}</td>
                             <td><a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a></td>
@@ -76,7 +87,42 @@
             {% endif %}
         </div>
         <div class="tab-pane" id="groups">
-            {{ dump(groups) }}
+            {% if groups|length == 0 %}
+                <div class="alert alert-warning">
+                    {{ 'common.list_is_empty'|trans }}
+                </div>
+            {% else %}
+                <table class="table table-hover table-condensed groups">
+                    <thead>
+                    <tr>
+                        <th>{{ 'group.name'|trans }}</th>
+                        <th>{{ 'group.description'|trans }}</th>
+                        <th>{{ 'group.roles'|trans }}</th>
+
+                        <th>
+                            <a href="javascript:void(null)" class="btn btn-success btn-edit btn-xs create">
+                                <i class="fa fa-plus fa-lg"></i>
+                            </a>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for g in groups %}
+                        <tr>
+                            <td>{{ g['name'] }}</td>
+                            <td><em>{{ g['description'] }}</em></td>
+                            <td>{{ g['roles'] }}</td>
+
+                            <td>
+                                <a href="javascript:void(null)" class="btn btn-primary btn-edit btn-xs edit">
+                                    <i class="fa fa-edit fa-lg"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            {% endif %}
         </div>
     </div>
 

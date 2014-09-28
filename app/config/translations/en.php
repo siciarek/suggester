@@ -3,6 +3,8 @@
 // app/config/translations/en.php
 
 $messages = array (
+  'group.roles' => 'Roles',
+  'group.description' => 'Description',
   'user.created_at' => 'Registered at',
   'user.email' => 'Email',
   'user.gender' => 'Gender',

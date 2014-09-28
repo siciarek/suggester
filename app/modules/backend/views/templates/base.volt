@@ -131,6 +131,7 @@
 
 {% block javascripts %}
     <script src="/themes/bootstrap/js/jquery.min.js"></script>
+    <script src="/themes/bootstrap/js/jquery.cookie.js"></script>
     <script src="/themes/bootstrap/js/bootstrap.min.js"></script>
     <script src="/themes/bootstrap/js/remember-last-tab.js"></script>
 {% endblock %}

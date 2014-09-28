@@ -3,6 +3,8 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'group.roles' => 'Uprawnienia',
+  'group.description' => 'Opis',
   'user.created_at' => 'Dodany',
   'user.email' => 'Email',
   'user.gender' => 'Płeć',
