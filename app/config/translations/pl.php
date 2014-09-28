@@ -3,6 +3,13 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'user.created_at' => 'Dodany',
+  'user.email' => 'Email',
+  'user.gender' => 'Płeć',
+  'user.id' => 'Id',
+  'user.last_name' => 'Nazwisko',
+  'user.first_name' => 'Imię',
+  'user.enabled' => 'Aktywny',
   'user.list' => 'Lista użytkowników',
   'form.csrf_validation_failed' => 'Niezgodność klucza CSRF, prawdopodobna próba nadużycia.',
   'user.sign_out' => 'Wyloguj się',
