@@ -1,7 +1,14 @@
 <?php
 
 $di->setShared('locale', function () use ($di) {
-    return $di->get('session')->get('locale', $di->getConfig()->application->locale);
+    $locale = $di->getConfig()->application->locale;
+
+    if($di->getCookies()->has('SUGGESTER_LOCALE')) {
+        $locale = trim($di->getCookies()->get('SUGGESTER_LOCALE'));
+        $di->getSession()->set('locale', $locale);
+    }
+
+    return $di->get('session')->get('locale');
 });
 
 $di->setShared('trans', function () use ($di) {

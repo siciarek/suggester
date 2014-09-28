@@ -18,6 +18,12 @@ class DefaultController extends CommonController {
      */
     public function listAction($format = 'html') {
 
+        $this->view->appscount = $this->modelsManager
+            ->createQuery('SELECT DISTINCT application FROM Application\Frontend\Entity\Suggestion WHERE application IS NOT NULL')
+            ->execute()
+            ->count()
+        ;
+
         $data = $this->modelsManager->createBuilder()
             ->addFrom('Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.id DESC');

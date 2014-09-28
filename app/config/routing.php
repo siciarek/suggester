@@ -14,6 +14,9 @@ $di->setShared('router', function () use ($di) {
     $router->setDefaultAction('home');
 
     $resources = array(
+        'backend' => array(
+            'Application\Backend\Controller\User',
+        ),
         'common' => array(
             'Application\Common\Controller\Test',
             'Application\Common\Controller\Locale',

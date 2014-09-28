@@ -84,7 +84,7 @@ $di->set('volt', function ($view, $di) {
 
             return $cachedFilePath;
         },
-        'compileAlways' => $di->getConfig()->application->env === 'dev',
+        'compileAlways' => true, // $di->getConfig()->application->env === 'dev',
     );
 
     $volt = new \Volt($view, $di);

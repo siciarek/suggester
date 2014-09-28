@@ -17,6 +17,9 @@ class LocaleController extends CommonController {
 
         $this->getDI()->getSession()->set('locale', $locale);
 
+        $expire = (new \DateTime())->add(new \DateInterval('P1Y'))->getTimestamp();
+        $this->getDi()->getCookies()->set('SUGGESTER_LOCALE', $locale, $expire, '/', false, null, false);
+
         $url = $this->request->getHTTPReferer();
         $url = trim($url);
         $url = !empty($url) ? $url : '/';

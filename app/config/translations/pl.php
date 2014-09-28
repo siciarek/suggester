@@ -3,10 +3,15 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'user.list' => 'Lista użytkowników',
   'form.csrf_validation_failed' => 'Niezgodność klucza CSRF, prawdopodobna próba nadużycia.',
   'user.sign_out' => 'Wyloguj się',
   'error.invalid_access_data' => 'Niewłaściwe dane dostępowe.',
   'error.user_disabled' => 'Konto zostało zablokowane, skontaktuj się z administratorem.',
+  'group.name' => 'Grupa',
+  'group.plural_name' => 'Grupy',
+  'user.name' => 'Użytkownik',
+  'user.plural_name' => 'Użytkownicy',
   'user.sign_in' => 'Zaloguj się',
   'user.password' => 'Hasło',
   'user.username' => 'Login',

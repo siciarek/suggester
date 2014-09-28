@@ -47,7 +47,9 @@
             <tr>
                 <th>#</th>
                 <th>{{ 'suggestion.status'|trans }}</th>
-                <th>{{ 'suggestion.application'|trans }}</th>
+                {% if appscount > 1 %}
+                    <th>{{ 'suggestion.application'|trans }}</th>
+                {% endif %}
                 <th>{{ 'common.priority'|trans }}</th>
                 <th>{{ 'suggestion.type'|trans }}</th>
                 <th>{{ 'suggestion.content'|trans }}</th>
@@ -63,15 +65,17 @@
                 <tr>
                     <td>{{ i.getId() }}</td>
                     <td>{{ i.getStatus() }}</td>
-                    <td>{{ i.getApplication() ? i.getApplication() : '&#0151;' }}</td>
+                    {% if appscount > 1 %}
+                        <td>{{ i.getApplication() ? i.getApplication() : '&#0151;' }}</td>
+                    {% endif %}
                     <td><span class="badge">{{ i.getPriority() }}</span></td>
                     <td>{{ ('suggestion.'~type[i.getTypeId()])|trans }}</td>
                     <td><em>{{ i.getContent() }}</em></td>
                     <td>
                         {% if i.getPageUrl() %}
                         <a href="{{ i.getPageUrl() }}" target="_blank">{{ i.getPageUrl() }}</a></td>
-                    {% else %}
-                        &#0151;
+                {% else %}
+                    &#0151;
                     {% endif %}
                     <td>{{ i.getAgent() ? i.getAgent() : '&#0151;' }}</td>
                     <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>

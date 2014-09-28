@@ -77,7 +77,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="{% block brandurl %}{% endblock %}">
+            <a class="navbar-brand" href="{% block brandurl %}/{% endblock %}">
                 <i class="fa fa-envelope-o fa-fw fa-lg"></i>
                 {{ app_name }} {{ app_version }}
             </a>

@@ -5,16 +5,13 @@ $loader->registerDirs(
     array(
         $di->getConfig()->dirs->libs,
         $di->getConfig()->dirs->tasks,
-
-        $di->getConfig()->dirs->modules . '/frontend/controllers',
-        $di->getConfig()->dirs->modules . '/frontend/entities',
-        $di->getConfig()->dirs->modules . '/frontend/forms',
-        $di->getConfig()->dirs->modules . '/common/controllers',
     )
 );
 
 $loader->registerNamespaces(
     array(
+        'Application\Backend\Controller' => $di->getConfig()->dirs->modules . '/backend/controllers/',
+
         'Application\Frontend\Controller' => $di->getConfig()->dirs->modules . '/frontend/controllers/',
         'Application\Frontend\Entity' => $di->getConfig()->dirs->modules . '/frontend/models/entities',
         'Application\Frontend\Form' => $di->getConfig()->dirs->modules . '/frontend/models/forms',
@@ -36,6 +33,10 @@ $application->registerModules(
         'frontend' => array(
             'className' => 'Application\Frontend\Module',
             'path' => $di->getConfig()->dirs->modules . '/frontend/Module.php',
+        ),
+        'backend' => array(
+            'className' => 'Application\Backend\Module',
+            'path' => $di->getConfig()->dirs->modules . '/backend/Module.php',
         ),
         'common' => array(
             'className' => 'Application\Common\Module',
