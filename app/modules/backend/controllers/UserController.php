@@ -19,6 +19,23 @@ use Application\Common\Exceptions\UserDisabledException;
 class UserController extends CommonController
 {
     /**
+     * @Route("/toggle/{id:[1-9]\d*}", name="backend.user.toggle")
+     */
+    public function toggleAction($id) {
+        /**
+         * @var User $user
+         */
+        $user = User::findFirst($id);
+
+        if($user instanceof User) {
+            $user->setEnabled(!$user->getEnabled())->save();
+        }
+
+        $url = $this->getReferer(['for' => 'backend.user.list']);
+        return $this->response->redirect($url, true);
+    }
+
+    /**
      * @Route("/list", name="backend.user.list")
      */
     public function listAction() {
