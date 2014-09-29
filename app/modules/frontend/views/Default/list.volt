@@ -40,7 +40,10 @@
     <br/>
 
     {% if items|length == 0 %}
-        <div class="alert alert-warning">{{ 'common.list_is_empty'|trans }}</div>
+        <div class="alert alert-info">
+            <i class="fa fa-info-circle fa-fw fa-lg"></i>
+            {{ 'common.list_is_empty'|trans }}
+        </div>
     {% else %}
         <table class="table table-condensed table-hover suggestions-table">
             <thead>
