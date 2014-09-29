@@ -10,15 +10,15 @@ $loader->registerDirs(
 
 $loader->registerNamespaces(
     array(
-        'Application\Backend\Controller' => $di->getConfig()->dirs->modules . '/backend/controllers/',
-        'Application\Backend\Form' => $di->getConfig()->dirs->modules . '/backend/models/forms',
+        'Application\Backend\Controller' => $di->getConfig()->dirs->modules . '/backend/controllers',
+        'Application\Backend\Form' => $di->getConfig()->dirs->modules . '/backend/models/Form',
 
-        'Application\Frontend\Controller' => $di->getConfig()->dirs->modules . '/frontend/controllers/',
-        'Application\Frontend\Entity' => $di->getConfig()->dirs->modules . '/frontend/models/entities',
-        'Application\Frontend\Form' => $di->getConfig()->dirs->modules . '/frontend/models/forms',
+        'Application\Frontend\Controller' => $di->getConfig()->dirs->modules . '/frontend/controllers',
+        'Application\Frontend\Entity' => $di->getConfig()->dirs->modules . '/frontend/models/Entity',
+        'Application\Frontend\Form' => $di->getConfig()->dirs->modules . '/frontend/models/Form',
 
-        'Application\Common\Controller' => $di->getConfig()->dirs->modules . '/common/controllers/',
-        'Application\Common\Plugin' => $di->getConfig()->dirs->modules . '/common/models/plugins/',
+        'Application\Common\Controller' => $di->getConfig()->dirs->modules . '/common/controllers',
+        'Application\Common\Plugin' => $di->getConfig()->dirs->modules . '/common/models/plugins',
         'Application\Common' => $di->getConfig()->dirs->modules . '/common/models',
 
         'Application\Test' => $di->getConfig()->dirs->tests,
