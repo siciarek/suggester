@@ -31,7 +31,7 @@ class Volt extends \Phalcon\Mvc\View\Engine\Volt
 
         $compiler->addFilter('trans', function ($resolvedArgs, $exprArgs) {
             $a = explode(',', $resolvedArgs);
-            return '$this->di->getTrans()->query(' . $a[0] . ')';
+            return '$this->di->getTrans()->query(' . $a[0] . (count($a) > 1 ? ','. $a[1] : '' ) .')';
         });
 
         $compiler->addFilter('date', function ($resolvedArgs, $exprArgs) {

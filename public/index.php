@@ -29,6 +29,10 @@ else {
     try {
         echo $application->handle()->getContent();
     }
+    catch(\Application\Common\Exceptions\NotFoundException $e) {
+        header_status(404);
+        readfile('404.html');
+    }
     catch(\Exception $e) {
 //        // TODO: log errors.
 //        echo get_class($e), ": ", $e->getMessage(), "\n";
@@ -38,7 +42,6 @@ else {
 
         header_status(500);
         readfile('500.html');
-        exit;
     }
 }
 

@@ -12,6 +12,7 @@ use Phalcon\Mvc\Controller;
 use Phalcon\Paginator\Adapter\QueryBuilder as Paginator;
 use Application\Common\Exceptions\InvalidAccessDataException;
 use Application\Common\Exceptions\UserDisabledException;
+use Application\Backend\Form\UserForm;
 
 /**
  * @RoutePrefix('/user')
@@ -28,11 +29,30 @@ class UserController extends CommonController
         $user = User::findFirst($id);
 
         if($user instanceof User) {
-            $user->setEnabled(!$user->getEnabled())->save();
+            $user->setEnabled(intval(!$user->getEnabled()))->save();
         }
 
         $url = $this->getReferer(['for' => 'backend.user.list']);
+
         return $this->response->redirect($url, true);
+    }
+
+    /**
+     * @Route("/create", name="backend.user.create")
+     * @Route("/edit/{id:[1-9]\d*}", name="backend.user.edit")
+     */
+    public function editAction($id = 0) {
+        /**
+         * @var User $user
+         */
+        $user = $id === 0 ? new User() : User::findFirst($id);
+
+        if(!$user instanceof User) {
+            throw new \Application\Common\Exceptions\NotFoundException();
+        }
+
+        $this->view->form = new UserForm($user);
+
     }
 
     /**

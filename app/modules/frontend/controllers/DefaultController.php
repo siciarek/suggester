@@ -7,26 +7,29 @@ use Application\Frontend\Entity\SuggestionType;
 use Application\Frontend\Form\SuggestionForm;
 use Phalcon\Paginator\Pager;
 use Phalcon\Mvc\Controller;
-use Phalcon\Paginator\Adapter\QueryBuilder as Paginator;
 
-class DefaultController extends CommonController {
+//use  as Paginator;
+
+class DefaultController extends CommonController
+{
 
     /**
      * @Get("/", name="frontend.list")
      * @Get("/", name="home")
      * @Get("/suggestions.{format:html|xls|xlsx|csv}}", name="frontend.list_export")
      */
-    public function listAction($format = 'html') {
+    public function listAction($format = 'html')
+    {
 
         $this->view->appscount = $this->modelsManager
-            ->createQuery('SELECT DISTINCT application FROM Application\Frontend\Entity\Suggestion WHERE application IS NOT NULL')
+            ->createQuery('SELECT DISTINCT application FROM \Application\Frontend\Entity\Suggestion WHERE application IS NOT NULL')
             ->execute()
-            ->count()
-        ;
+            ->count();
 
         $data = $this->modelsManager->createBuilder()
-            ->addFrom('Application\Frontend\Entity\Suggestion', 's')
+            ->addFrom('\Application\Frontend\Entity\Suggestion', 's')
             ->orderBy('s.id DESC');
+
         $type = [];
 
         foreach (SuggestionType::find()->toArray() as $t) {
@@ -47,9 +50,15 @@ class DefaultController extends CommonController {
                 $currentPage = 1;
             }
 
-            $this->view->items = new Pager(
-                new Paginator(array(
-                    'builder' => $data,
+
+            $this->view->items = $data->getQuery()->execute();
+
+            // TODO: fix queryBuilder problem
+            $this->view->items = new \Phalcon\Paginator\Pager(
+//              new \Phalcon\Paginator\Adapter\QueryBuilder(array(
+//                  'builder' => $data,
+                new \Phalcon\Paginator\Adapter\Model(array(
+                    'data' => $data->getQuery()->execute(),
                     'limit' => $this->getDI()->getConfig()->pager->limit,
                     'page' => $currentPage,
                 )),
@@ -67,7 +76,8 @@ class DefaultController extends CommonController {
      * @param $data
      * @return \Phalcon\Http\ResponseInterface
      */
-    public function getExcelResponse($format, $data, $type) {
+    public function getExcelResponse($format, $data, $type)
+    {
 
         /**
          * @var \Phalcon\Translate\Adapter\NativeArray $trans
@@ -171,7 +181,8 @@ class DefaultController extends CommonController {
     /**
      * @Route("/remove/{id:[1-9]\d*}", name="frontend.remove")
      */
-    public function removeAction($id) {
+    public function removeAction($id)
+    {
 
         $item = Suggestion::findFirst(['id = ' . $id . '',]);
 
@@ -190,7 +201,8 @@ class DefaultController extends CommonController {
     /**
      * @Route("/form", name="frontend.form")
      */
-    public function formAction() {
+    public function formAction()
+    {
 
         $data = $_POST;
 
@@ -253,7 +265,8 @@ class DefaultController extends CommonController {
     /**
      * @Get("/prompt", name="frontend.prompt")
      */
-    public function promptAction() {
+    public function promptAction()
+    {
 
         $options = [
             'application' => $this->request->get('application'),

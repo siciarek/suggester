@@ -11,6 +11,7 @@ $loader->registerDirs(
 $loader->registerNamespaces(
     array(
         'Application\Backend\Controller' => $di->getConfig()->dirs->modules . '/backend/controllers/',
+        'Application\Backend\Form' => $di->getConfig()->dirs->modules . '/backend/models/forms',
 
         'Application\Frontend\Controller' => $di->getConfig()->dirs->modules . '/frontend/controllers/',
         'Application\Frontend\Entity' => $di->getConfig()->dirs->modules . '/frontend/models/entities',

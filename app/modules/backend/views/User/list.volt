@@ -5,8 +5,24 @@
 <script>
     $(document).ready(function(){
        rememberLastTab('nav-tabs');
+        $('table.users').on('click', 'i.toggle', function(){
+            var self = $(this);
+            var id = self.closest('tr').attr('id').replace(/\D*/, '');
+            var url = '{{ url({ 'for': 'backend.user.toggle', 'id': 1024 }) }}'.replace(1024, id);
+
+            location.href = url;
+        });
     });
 </script>
+{% endblock %}
+
+{% block stylesheets %}
+    {{ super() }}
+    <style>
+        i.toggle {
+            cursor: pointer;
+        }
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -62,9 +78,9 @@
                     </thead>
                     <tbody>
                     {% for u in users %}
-                        <tr>
+                        <tr id="user-{{ u['id'] }}">
                             <td>
-                                <i class="fa {{ u['enabled'] ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa-lg"></i>
+                                <i class="toggle {{ u['enabled'] ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa fa-lg"></i>
                             </td>
                             <td>{{ u['id'] }}</td>
                             <td>{{ u['username'] }}</td>

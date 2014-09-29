@@ -3,6 +3,8 @@
 // app/config/translations/pl.php
 
 $messages = array (
+  'user.edit' => 'Użytkownik %name%',
+  'user.create' => 'Dodaj użytkownika',
   'group.roles' => 'Uprawnienia',
   'group.description' => 'Opis',
   'user.created_at' => 'Dodany',
@@ -24,6 +26,7 @@ $messages = array (
   'user.sign_in' => 'Zaloguj się',
   'user.password' => 'Hasło',
   'user.username' => 'Login',
+  'user.description' => 'Opis',
   'common.search' => 'Wpisz szukaną frazę…',
   'status is required' => 'Status jest wymagany.',
   'suggestion.status' => 'Status',

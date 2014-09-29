@@ -59,16 +59,17 @@ class DbTask extends \Phalcon\CLI\Task
         switch($this->dbconf->adapter) {
             case 'mysql':
 
-                $query = sprintf("DROP DATABASE IF EXISTS `%s`", $this->dbconf->dbname);
+                $query = sprintf("DROP DATABASE IF EXISTS %s", $this->dbconf->dbname);
 
-                $cmd = sprintf('%s -u"%s" %s -e "%s"',
+                $cmd = sprintf('%s -h%s -u%s %s -e "%s"',
                     MYSQL,
+                    $this->dbconf->host,
                     $this->dbconf->username,
-                    $this->dbconf->password ? '-p "' . $this->dbconf->password . '"' : '',
+                    $this->dbconf->password ? '-p' . $this->dbconf->password . '' : '',
                     $query
                 );
 
-                return `$cmd`;
+                return $this->runCmd($cmd);
 
                 break;
 
@@ -82,46 +83,56 @@ class DbTask extends \Phalcon\CLI\Task
 
     }
 
-    protected function createDatabase() {
+    protected function createDatabase()
+    {
+        $query = sprintf("CREATE DATABASE %s", $this->dbconf->dbname);
 
-        $dbconf = Phalcon\DI::getDefault()->getConfig()->database;
-
-        $query = sprintf("CREATE DATABASE `%s`", $dbconf->dbname);
-
-        $cmd = sprintf('%s -u"%s" %s -e "%s"',
+        $cmd = sprintf('%s -h%s -u%s %s -e "%s"',
             MYSQL,
-            $dbconf->username,
-            $dbconf->password ? '-p "' . $dbconf->password . '"' : '',
+            $this->dbconf->host,
+            $this->dbconf->username,
+            $this->dbconf->password ? '-p' . $this->dbconf->password . '' : '',
             $query
         );
 
-        return `$cmd`;
+        return $this->runCmd($cmd);
     }
 
-    protected function loadSchema() {
-
-        $dbconf = Phalcon\DI::getDefault()->getConfig()->database;
-
-        $cmd = sprintf('%s -u"%s" %s -D"%s" < %s',
+    protected function loadSchema()
+    {
+        $cmd = sprintf('%s -h%s -u%s %s  -D%s < %s',
             MYSQL,
-            $dbconf->username,
-            $dbconf->password ? '-p "' . $dbconf->password . '"' : '',
-            $dbconf->dbname,
+            $this->dbconf->host,
+            $this->dbconf->username,
+            $this->dbconf->password ? '-p' . $this->dbconf->password . '' : '',
+            $this->dbconf->dbname,
             $this->schema
         );
 
-        $ret = `$cmd`;
+        $ret = $this->runCmd($cmd);
 
-        $cmd = sprintf('%s -u"%s" %s -D"%s" < %s',
+        $cmd = sprintf('%s -h%s -u%s %s  -D%s < %s',
             MYSQL,
-            $dbconf->username,
-            $dbconf->password ? '-p "' . $dbconf->password . '"' : '',
-            $dbconf->dbname,
+            $this->dbconf->host,
+            $this->dbconf->username,
+            $this->dbconf->password ? '-p' . $this->dbconf->password . '' : '',
+            $this->dbconf->dbname,
             preg_replace('/mysql.sql$/', 'fixtures.sql', $this->schema)
         );
 
-        $ret .= `$cmd`;
+        $ret .= $this->runCmd($cmd);
+
 
         return $ret;
+    }
+
+    /**
+     * @param $cmd
+     * @return mixed
+     */
+    protected function runCmd($cmd)
+    {
+        echo $cmd . PHP_EOL;
+        return `$cmd`;
     }
 }
