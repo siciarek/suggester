@@ -15,15 +15,17 @@ class LocaleController extends CommonController {
             $locale = 'en';
         }
 
-        $this->getDI()->getSession()->set('locale', $locale);
+        $session = $this->getDI()->getSession();
 
+        // Set locale in session:
+        $session->set('locale', $locale);
+
+        // Set locale in cookies (1 year expiration time):
+        $name = $this->getDi()->getConfig()->session->name . '_LOCALE';
+        $value = $session->get('locale');
         $expire = (new \DateTime())->add(new \DateInterval('P1Y'))->getTimestamp();
-        $this->getDi()->getCookies()->set('SUGGESTER_LOCALE', $locale, $expire, '/', false, null, false);
+        $this->getDi()->getCookies()->set($name, $value, $expire, '/', false, null, false);
 
-        $url = $this->request->getHTTPReferer();
-        $url = trim($url);
-        $url = !empty($url) ? $url : '/';
-
-        $this->response->redirect($url, true);
+        return $this->response->redirect($this->getReferer(), true);
     }
 }
