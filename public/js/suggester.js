@@ -130,7 +130,7 @@ div#__suggester_window { z-index:64000; display:none; overflow:hidden; position:
 width:' + suggesterWindowWidth + 'px; height:' + suggesterWindowHeight + 'px; \
 right:' + suggesterToggleButtonWidth + 'px; top:0; padding: 0; border-size: 4px; ' +
     'border-style:ridge;' +
-    'border-color:' + suggesterButtonColor + ' !important; border-top:0 !important; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \
+    'border-color:gray !important; border-top:0 !important; border-radius: 11px; border-top-left-radius: 0; border-top-right-radius: 0; \
 background-color:#EEEEEE } \
 </style>';
 var __screen           = '<div id="__suggester_window" style="display:none"><iframe src="' + suggesterFormPage + '" id="__screen"></iframe></div>';
