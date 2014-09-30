@@ -7,9 +7,9 @@ Potrzeba biznesowa: Zapewnienie uprawnionym użytkownikom dostępu do odpowiedni
   Chciałbym mieć pewność, że tylko uprawnieni użytkownicy mają do nich dostęp
 
   Założenia: Użytkownik powinien być wylogowany a strona powinna być w języku polskim i w trybie produkcyjnym
-    Zakładając że aplikacja jest w środowisku produkcyjnym
-    I że odwiedzę stronę "/sign-out"
-    Oraz odwiedzę stronę "/locale/pl"
+    Zakładając że odwiedzę stronę "/sign-out"
+    I odwiedzę stronę "/locale/pl"
+    Oraz że aplikacja jest w środowisku produkcyjnym
 
   Scenariusz: Próba otwarcia nieistniejącej strony
     Zakładając że odwiedzę stronę "/not/existing/page"

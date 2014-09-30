@@ -20,7 +20,8 @@ CREATE TABLE `suggestion` (
   `author` VARCHAR(127),
   `content` TEXT,
   `page_url` VARCHAR(255),
-  `agent` VARCHAR(255),
+  `ip` VARCHAR(15),
+  `user_agent` VARCHAR(255),
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `status` ENUM('pending', 'accepted', 'rejected', 'done') DEFAULT 'pending',
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`) ON DELETE CASCADE

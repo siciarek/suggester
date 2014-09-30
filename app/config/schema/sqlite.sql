@@ -19,7 +19,8 @@ CREATE TABLE `suggestion` (
   `author` TEXT,
   `content` TEXT,
   `page_url` TEXT,
-  `agent` TEXT,
+  `ip` TEXT,
+  `user_agent` TEXT,
   `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
   `status` TEXT  CHECK(`status` IN ('pending', 'accepted', 'rejected', 'done')) NOT NULL DEFAULT 'pending',
   FOREIGN KEY (`type_id`) REFERENCES `suggestion_type`(`id`)

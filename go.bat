@@ -1,3 +1,8 @@
-set TABLE=client
-set MODEL=%TABLE%
-vendor\phalcon\devtools\phalcon.bat model %MODEL% --name=%TABLE% --namespace=Application\Frontend\Entity --output=app/modules/frontend/models/Entity --get-set --force
+@ECHO OFF
+
+SET MPATH=app/modules/frontend/models/Entity
+SET MNMSPACE=Application\Frontend\Entity
+
+FOR %%T IN ("suggestion") DO (
+    phalcon model %%T --name=%%T --namespace=%MNMSPACE% --output=%MPATH% --get-set --force
+)

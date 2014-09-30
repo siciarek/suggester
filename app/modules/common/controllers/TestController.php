@@ -16,26 +16,8 @@ class TestController extends CommonController {
 
         $output = [];
 
-        $accessData = new Access('czesolak', 'password');
-
-        $this->getDI()->getUser()->authenticate($accessData);
-
-        $roles = [
-            'IS_AUTHENTICATED_ANONYMOUSLY',
-            'ROLE_USER',
-            'ROLE_ADMIN',
-            'ROLE_SUPER_ADMIN',
-            'ROLE_PRIVILEGED_ARTICLE_EDITOR',
-            'ROLE_BASIC_ARTICLE_READER',
-            'ROLE_BASIC_ARTICLE_EDITOR',
-        ];
-
-        foreach($roles as $role) {
-            $temp = [];
-            $data = $this->getDI()->getUser()->expandRole($role);
-            $temp = array_unique(array_merge($temp, $data), SORT_STRING);
-            $output[$role] = $temp;
-        }
+        $output[] = $this->request->getClientAddress();
+        $output[] = $this->request->getClientAddress(true);
 
         return $this->response
             ->setContentType('application/json')

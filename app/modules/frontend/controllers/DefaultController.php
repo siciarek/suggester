@@ -192,7 +192,7 @@ class DefaultController extends CommonController
         $options = [
             'application' => $this->request->get('application'),
             'page_url' => $this->request->get('page_url'),
-            'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
+            'author' => $this->request->get('author', ['trim', 'title', 'null'], null),
         ];
 
         // Routing with parameters fix:
@@ -218,9 +218,17 @@ class DefaultController extends CommonController
             $entity = $form->getEntity();
             $form->bind($data, $entity);
             if ($form->isValid()) {
-                $entity->setAgent($this->request->getUserAgent());
-                $entity->setCreatedAt(date('Y-m-d H:i:s'));
-                $entity->setPageUrl(preg_replace('/^(https?:)_/', '$1//', $entity->getPageUrl()));
+
+                $pageUrl = preg_replace('/^(https?:)_/', '$1//', $entity->getPageUrl());
+                $pageUrl = empty($pageUrl) ?  null : $pageUrl;
+                $ip = $this->request->getClientAddress();
+                $userAgent = $this->request->getUserAgent();
+                $createdAt = date('Y-m-d H:i:s');
+
+                $entity->setPageUrl($pageUrl);
+                $entity->setIp($ip);
+                $entity->setUserAgent($userAgent);
+                $entity->setCreatedAt($createdAt);
 
                 // TODO: create constants in Suggester class
                 $entity->setStatus('pending');
@@ -254,7 +262,7 @@ class DefaultController extends CommonController
         $options = [
             'application' => $this->request->get('application'),
             'page_url' => $this->request->get('page_url'),
-            'author' => $this->request->get('author') ? : $this->getDI()->getTrans()->query('common.anonymous'),
+            'author' => $this->request->get('author', ['trim', 'title', 'null'], null),
         ];
 
         $this->view->options = $options;

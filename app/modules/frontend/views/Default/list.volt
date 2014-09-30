@@ -57,7 +57,8 @@
                 <th>{{ 'suggestion.type'|trans }}</th>
                 <th>{{ 'suggestion.content'|trans }}</th>
                 <th>{{ 'suggestion.page_url'|trans }}</th>
-                <th>{{ 'suggestion.agent'|trans }}</th>
+                <th>{{ 'suggestion.user_agent'|trans }}</th>
+                <th>{{ 'suggestion.ip'|trans }}</th>
                 <th>{{ 'suggestion.author'|trans }}</th>
                 <th>{{ 'suggestion.created_at'|trans }}</th>
                 <th>&nbsp;</th>
@@ -80,8 +81,9 @@
                 {% else %}
                     &#0151;
                     {% endif %}
-                    <td>{{ i.getAgent() ? i.getAgent() : '&#0151;' }}</td>
-                    <td>{{ i.getAuthor() ? i.getAuthor() : '&#0151;' }}</td>
+                    <td>{{ i.getUserAgent() ? i.getUserAgent() : '&#0151;' }}</td>
+                    <td>{{ i.getIp() ? i.getIp() : '&#0151;' }}</td>
+                    <td>{{ i.getAuthor() ? i.getAuthor() : 'common.anonymous'|trans }}</td>
                     <td class="nowrap">{{ i.getCreatedAt()|date('Y-m-d H:i') }}</td>
                     <td>
                         {% if is_granted('ROLE_ADMIN') %}

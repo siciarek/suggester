@@ -34,6 +34,7 @@ class DbTask extends \Phalcon\CLI\Task
 
                 echo $this->createDatabase();
                 echo $this->loadSchema();
+                echo $this->loadFixtures();
 
                 break;
 

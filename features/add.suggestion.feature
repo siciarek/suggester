@@ -28,7 +28,8 @@ Potrzeba biznesowa: Możliwość dodawania sugestii i opinii przez użytkownikó
     Jeżeli odwiedzę stronę "/"
     Wtedy zobaczę tekst "Lista sugestii (1)"
     I zobaczę tekst "Sugestia dodana z domyślnymi ustawieniami formularza."
-    Zakładając że w systemie nie ma testowych danych
+    I że w systemie nie ma testowych danych
+    I odwiedzę stronę "/"
 
   @multi
   Szablon scenariusza: Dodanie nowych opini z wybranymi wartościami formularza

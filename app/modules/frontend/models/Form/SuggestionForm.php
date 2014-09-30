@@ -100,7 +100,9 @@ class SuggestionForm extends CommonForm {
             'value' => $author,
         )))
             ->addFilter('trim')
-            ->addFilter('null');
+            ->addFilter('title')
+            ->addFilter('null')
+        ;
 
         $controls[] = (new Hidden('application', array(
             'value' => $application,
