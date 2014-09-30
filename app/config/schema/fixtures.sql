@@ -1,9 +1,3 @@
-INSERT INTO `suggestion_type` (`name`) VALUES('error');
-INSERT INTO `suggestion_type` (`name`) VALUES('feature_request');
-INSERT INTO `suggestion_type` (`name`) VALUES('change_request');
-INSERT INTO `suggestion_type` (`name`) VALUES('comment');
-INSERT INTO `suggestion_type` (`name`) VALUES('other');
-
 INSERT INTO `user` (`enabled`, `username`, `email`, `password`, `first_name`, `last_name`, `gender`) VALUES (1, 'czesolak', 'czesolak@example.com', MD5('password'), 'Czesław', 'Olak', 'male');
 INSERT INTO `user` (`enabled`, `username`, `email`, `password`, `first_name`, `last_name`, `gender`) VALUES (1, 'akarawajczyk', 'akarawajczyk@example.com', MD5('password'), 'Aleksander', 'Karawajczyk', 'male');
 INSERT INTO `user` (`enabled`, `username`, `email`, `password`, `first_name`, `last_name`, `gender`) VALUES (1, 'mariolak', 'mariolak@example.com', MD5('password'), 'Marianna', 'Olak', 'female');
@@ -24,4 +18,8 @@ INSERT INTO `user_group` VALUES (2, 5);
 INSERT INTO `user_group` VALUES (3, 2);
 INSERT INTO `user_group` VALUES (4, 3);
 
-
+INSERT INTO `suggestion_type` (`name`) VALUES('error');
+INSERT INTO `suggestion_type` (`name`) VALUES('feature_request');
+INSERT INTO `suggestion_type` (`name`) VALUES('change_request');
+INSERT INTO `suggestion_type` (`name`) VALUES('comment');
+INSERT INTO `suggestion_type` (`name`) VALUES('other');

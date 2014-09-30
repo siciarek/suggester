@@ -93,9 +93,15 @@
                 {% endfor %}
             </ul>
 
+            <ul class="nav navbar-nav navbar-right">
             {% block access %}
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.isAuthenticated() %}
+                {#<li>#}
+                    {#<a href="{{ url({'for':'frontend.form'}) }}">#}
+                        {#<i class="fa fa-list-alt fa-fw fa-lg"></i>#}
+                        {#{{ 'suggestion.add'|trans }}#}
+                    {#</a>#}
+                {#</li>#}
+                {% if user.isAuthenticated() %}
                         <li>
                             <a href="javascript:void(null)">
                                 <i class="fa fa-user fa-fw fa-lg"></i>

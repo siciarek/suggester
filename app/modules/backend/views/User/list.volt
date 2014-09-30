@@ -67,8 +67,6 @@
                         <th>{{ 'user.last_name'|trans }}</th>
                         <th>{{ 'user.gender'|trans }}</th>
                         <th>{{ 'user.created_at'|trans }}</th>
-
-
                         <th>
                             <a href="javascript:void(null)" class="btn btn-success btn-edit btn-xs create">
                                 <i class="fa fa-plus fa-lg"></i>
@@ -78,19 +76,17 @@
                     </thead>
                     <tbody>
                     {% for u in users %}
-                        <tr id="user-{{ u['id'] }}">
+                        <tr id="user-{{ u.getId() }}">
                             <td>
-                                <i class="toggle {{ u['enabled'] ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa fa-lg"></i>
+                                <i class="toggle {{ u.getEnabled() ? 'fa-check-square-o' : 'fa-square-o text-muted' }} fa fa-lg"></i>
                             </td>
-                            <td>{{ u['id'] }}</td>
-                            <td>{{ u['username'] }}</td>
-                            <td><a href="mailto:{{ u['email'] }}">{{ u['email'] }}</a></td>
-                            <td>{{ u['first_name'] }}</td>
-                            <td>{{ u['last_name'] }}</td>
-                            <td>{{ u['gender'] }}</td>
-                            <td>{{ u['created_at']|date('Y-m-d H:i') }}</td>
-
-
+                            <td>{{ u.getId() }}</td>
+                            <td>{{ u.getUsername() }}</td>
+                            <td><a href="mailto:{{ u.getEmail() }}">{{ u.getEmail() }}</a></td>
+                            <td>{{ u.getFirstName() }}</td>
+                            <td>{{ u.getLastName() }}</td>
+                            <td>{{ u.getGender()}}</td>
+                            <td>{{ u.getCreatedAt()|date('Y-m-d H:i') }}</td>
                             <td>
                                 <a href="javascript:void(null)" class="btn btn-primary btn-edit btn-xs edit">
                                     <i class="fa fa-edit fa-lg"></i>

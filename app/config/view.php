@@ -113,3 +113,10 @@ $di->set('view', function () use ($di) {
 
     return $view;
 });
+
+$di->set('pager', function() use ($di) {
+    $pager = new \Application\Common\Pager();
+    $pager->setDi($di);
+
+    return $pager;
+});

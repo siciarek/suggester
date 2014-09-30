@@ -77,24 +77,8 @@ class UserController extends CommonController
             $currentPage = 1;
         }
 
-        $users = (new Pager(
-            new \Phalcon\Paginator\Adapter\QueryBuilder(array(
-                'builder' => $data->users,
-                'limit' => $this->getDI()->getConfig()->pager->limit,
-                'page' => $currentPage,
-            )),
-            array(
-                'layoutClass' => 'Phalcon\Paginator\Pager\Layout\Bootstrap',
-                'rangeLength' => $this->getDI()->getConfig()->pager->length,
-                'urlMask' => '?page={%page_number}',
-            )
-        ))
-            ->getIterator()
-            ->toArray();
+        $this->view->users = $this->getDI()->getPager()->get($data->users, $currentPage);
 
-        $groups = $data->groups->getQuery()->execute()->toArray();
-
-        $this->view->users = $users;
-        $this->view->groups = $groups;
+        $this->view->groups = $data->groups->getQuery()->execute()->toArray();
     }
 }

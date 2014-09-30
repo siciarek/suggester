@@ -50,24 +50,7 @@ class DefaultController extends CommonController
                 $currentPage = 1;
             }
 
-
-            $this->view->items = $data->getQuery()->execute();
-
-            // TODO: fix queryBuilder problem
-            $this->view->items = new \Phalcon\Paginator\Pager(
-//              new \Phalcon\Paginator\Adapter\QueryBuilder(array(
-//                  'builder' => $data,
-                new \Phalcon\Paginator\Adapter\Model(array(
-                    'data' => $data->getQuery()->execute(),
-                    'limit' => $this->getDI()->getConfig()->pager->limit,
-                    'page' => $currentPage,
-                )),
-                array(
-                    'layoutClass' => 'Phalcon\Paginator\Pager\Layout\Bootstrap',
-                    'rangeLength' => $this->getDI()->getConfig()->pager->length,
-                    'urlMask' => '?page={%page_number}',
-                )
-            );
+            $this->view->items = $this->getDI()->getPager()->get($data, $currentPage);
         }
     }
 

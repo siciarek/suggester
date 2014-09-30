@@ -80,7 +80,6 @@ class DbTask extends \Phalcon\CLI\Task
                 }
                 break;
         }
-
     }
 
     protected function createDatabase()
@@ -109,21 +108,21 @@ class DbTask extends \Phalcon\CLI\Task
             $this->schema
         );
 
-        $ret = $this->runCmd($cmd);
+        return $this->runCmd($cmd);
+    }
 
-        $cmd = sprintf('%s -h%s -u%s %s  -D%s < %s',
+    protected function loadFixtures()
+    {
+        $cmd = sprintf('%s -h%s -u%s %s-D%s < %s',
             MYSQL,
             $this->dbconf->host,
             $this->dbconf->username,
-            $this->dbconf->password ? '-p' . $this->dbconf->password . '' : '',
+            $this->dbconf->password ? '-p' . $this->dbconf->password . ' ' : '',
             $this->dbconf->dbname,
             preg_replace('/mysql.sql$/', 'fixtures.sql', $this->schema)
         );
 
-        $ret .= $this->runCmd($cmd);
-
-
-        return $ret;
+        return $this->runCmd($cmd);
     }
 
     /**
