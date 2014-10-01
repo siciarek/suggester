@@ -4,6 +4,15 @@ namespace Application\Frontend\Entity;
 
 class SuggestionType extends \Phalcon\Mvc\Model
 {
+    public function initialize()
+    {
+        $this->hasMany(
+            'id', 'Application\Frontend\Entity\Suggestion', 'type_id',
+            array('alias' => 'suggestions')
+        );
+
+//        $this->skipAttributes(array('created_at'));
+    }
 
     /**
      *
